@@ -23,22 +23,34 @@ import java.lang.annotation.Target;
 
 /**
  * <pre>
- *     desc   : 参数自动填充
+ *     desc   : 路由创建注解
  *     author : xuexiang
- *     time   : 2018/5/16 上午12:51
+ *     time   : 2018/5/16 上午12:49
  * </pre>
  */
-@Target({ElementType.FIELD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.CLASS)
-public @interface Autowired {
+public @interface Router {
 
-    // Mark param's name or service name.
-    String name() default "";
+    /**
+     * Path of route
+     */
+    String path();
 
-    // If required, app will be crash when value is null.
-    // Primitive type wont be check!
-    boolean required() default false;
+    /**
+     * Used to merger routes, the group name MUST BE USE THE COMMON WORDS !!!
+     */
+    String group() default "";
 
-    // Description of the field
-    String desc() default "No desc.";
+    /**
+     * Name of route, used to generate javadoc.
+     */
+    String name() default "undefined";
+    
+    /**
+     * Extra data, can be set by user.
+     * Ps. U should use the integer num sign the switch, by bits. 10001010101010
+     */
+    int extras() default Integer.MIN_VALUE;
+
 }

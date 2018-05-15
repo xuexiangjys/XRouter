@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrouter-annotation/xrouter-annotation.iml" filepath="$PROJECT_DIR$/xrouter-annotation/xrouter-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrouter-compiler/xrouter-compiler.iml" filepath="$PROJECT_DIR$/xrouter-compiler/xrouter-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xrouter-plugin/xrouter-plugin.iml" filepath="$PROJECT_DIR$/xrouter-plugin/xrouter-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xrouter-runtime/xrouter-runtime.iml" filepath="$PROJECT_DIR$/xrouter-runtime/xrouter-runtime.iml" />
     </modules>
   </component>
 </project>

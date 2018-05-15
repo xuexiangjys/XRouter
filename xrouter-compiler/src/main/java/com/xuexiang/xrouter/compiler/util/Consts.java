@@ -59,6 +59,6 @@ public class Consts {
 
     // Annotation type
     public static final String ANNOTATION_TYPE_INTECEPTOR = FACADE_PACKAGE + ".annotation.Interceptor";
-    public static final String ANNOTATION_TYPE_ROUTE = FACADE_PACKAGE + ".annotation.Route";
+    public static final String ANNOTATION_TYPE_ROUTE = FACADE_PACKAGE + ".annotation.Router";
     public static final String ANNOTATION_TYPE_AUTOWIRED = FACADE_PACKAGE + ".annotation.Autowired";
 }

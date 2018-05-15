@@ -1,7 +1,23 @@
+/*
+ * Copyright (C) 2018 xuexiangjys(xuexiangjys@163.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.xuexiang.xrouter.model;
 
 
-import com.xuexiang.xrouter.annotation.Route;
+import com.xuexiang.xrouter.annotation.Router;
 import com.xuexiang.xrouter.enums.RouteType;
 
 import java.util.Map;
@@ -9,10 +25,11 @@ import java.util.Map;
 import javax.lang.model.element.Element;
 
 /**
- * 路由信息
- *
- * @author xuexiang
- * @date 2018/4/1 下午11:40
+ * <pre>
+ *     desc   : 路由信息
+ *     author : xuexiang
+ *     time   : 2018/5/15 下午11:24
+ * </pre>
  */
 public class RouteInfo {
     private RouteType type;         // Type of route
@@ -59,24 +76,24 @@ public class RouteInfo {
     /**
      * Type
      *
-     * @param route       route
+     * @param router       router
      * @param destination destination
      * @param type        type
      */
-    public RouteInfo(Route route, Class<?> destination, RouteType type) {
-        this(type, null, destination, route.path(), route.group(), null, route.extras());
+    public RouteInfo(Router router, Class<?> destination, RouteType type) {
+        this(type, null, destination, router.path(), router.group(), null, router.extras());
     }
 
     /**
      * Type
      *
-     * @param route      route
+     * @param router      router
      * @param rawType    rawType
      * @param type       type
      * @param paramsType paramsType
      */
-    public RouteInfo(Route route, Element rawType, RouteType type, Map<String, Integer> paramsType) {
-        this(type, rawType, null, route.path(), route.group(), paramsType, route.extras());
+    public RouteInfo(Router router, Element rawType, RouteType type, Map<String, Integer> paramsType) {
+        this(type, rawType, null, router.path(), router.group(), paramsType, router.extras());
     }
 
     /**

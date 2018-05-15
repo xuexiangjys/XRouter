@@ -14,28 +14,7 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter;
 
-/**
- * <pre>
- *     desc   : 字段的类型[Intent]
- *     author : xuexiang
- *     time   : 2018/5/16 上午12:51
- * </pre>
- */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+public class MyClass {
 }

@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/xrouter-annotation" />
             <option value="$PROJECT_DIR$/xrouter-compiler" />
+            <option value="$PROJECT_DIR$/xrouter-plugin" />
+            <option value="$PROJECT_DIR$/xrouter-runtime" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

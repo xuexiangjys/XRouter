@@ -14,27 +14,39 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.model;
+package com.xuexiang.xrouter.util
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import org.gradle.api.Project
 
 /**
  * <pre>
- *     desc   : 获得泛型的类型
+ *     desc   : 日志记录
  *     author : xuexiang
  *     time   : 2018/5/15 下午11:25
  * </pre>
  */
-public class TypeWrapper<T> {
-    protected final Type type;
+class Logger {
+    static org.gradle.api.logging.Logger logger
 
-    protected TypeWrapper() {
-        Type superClass = getClass().getGenericSuperclass();
-        type = ((ParameterizedType) superClass).getActualTypeArguments()[0];
+    static void make(Project project) {
+        logger = project.getLogger()
     }
 
-    public Type getType() {
-        return type;
+    static void i(String info) {
+        if (null != info && null != logger) {
+            logger.info("XRouter::Register >>> " + info)
+        }
+    }
+
+    static void e(String error) {
+        if (null != error && null != logger) {
+            logger.error("XRouter::Register >>> " + error)
+        }
+    }
+
+    static void w(String warning) {
+        if (null != warning && null != logger) {
+            logger.warn("XRouter::Register >>> " + warning)
+        }
     }
 }

@@ -1,1 +1,1 @@
-include ':app', ':xrouter-annotation', ':xrouter-compiler'
+include ':app', ':xrouter-annotation', ':xrouter-compiler', ':xrouter-runtime', ':xrouter-plugin'

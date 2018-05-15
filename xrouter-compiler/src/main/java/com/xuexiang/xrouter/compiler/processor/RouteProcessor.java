@@ -9,7 +9,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
 import com.xuexiang.xrouter.annotation.Autowired;
-import com.xuexiang.xrouter.annotation.Route;
+import com.xuexiang.xrouter.annotation.Router;
 import com.xuexiang.xrouter.compiler.util.Consts;
 import com.xuexiang.xrouter.compiler.util.Logger;
 import com.xuexiang.xrouter.compiler.util.TypeUtils;
@@ -140,7 +140,7 @@ public class RouteProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         if (CollectionUtils.isNotEmpty(annotations)) {
-            Set<? extends Element> routeElements = roundEnv.getElementsAnnotatedWith(Route.class);
+            Set<? extends Element> routeElements = roundEnv.getElementsAnnotatedWith(Router.class);
             try {
                 logger.info(">>> Found routes, start... <<<");
                 this.parseRoutes(routeElements);
@@ -215,11 +215,11 @@ public class RouteProcessor extends AbstractProcessor {
             //  Follow a sequence, find out metas of group first, generate java file, then statistics them as root.
             for (Element element : routeElements) {
                 TypeMirror tm = element.asType();
-                Route route = element.getAnnotation(Route.class);
+                Router router = element.getAnnotation(Router.class);
                 RouteInfo routeInfo = null;
 
                 if (types.isSubtype(tm, type_Activity)) {                 // Activity
-                    logger.info(">>> Found activity route: " + tm.toString() + " <<<");
+                    logger.info(">>> Found activity router: " + tm.toString() + " <<<");
 
                     // Get all fields annotation by @Autowired
                     Map<String, Integer> paramsType = new HashMap<>();
@@ -230,16 +230,16 @@ public class RouteProcessor extends AbstractProcessor {
                             paramsType.put(StringUtils.isEmpty(paramConfig.name()) ? field.getSimpleName().toString() : paramConfig.name(), typeUtils.typeExchange(field));
                         }
                     }
-                    routeInfo = new RouteInfo(route, element, RouteType.ACTIVITY, paramsType);
+                    routeInfo = new RouteInfo(router, element, RouteType.ACTIVITY, paramsType);
                 } else if (types.isSubtype(tm, iProvider)) {         // IProvider
-                    logger.info(">>> Found provider route: " + tm.toString() + " <<<");
-                    routeInfo = new RouteInfo(route, element, RouteType.PROVIDER, null);
+                    logger.info(">>> Found provider router: " + tm.toString() + " <<<");
+                    routeInfo = new RouteInfo(router, element, RouteType.PROVIDER, null);
                 } else if (types.isSubtype(tm, type_Service)) {           // Service
-                    logger.info(">>> Found service route: " + tm.toString() + " <<<");
-                    routeInfo = new RouteInfo(route, element, RouteType.parse(SERVICE), null);
+                    logger.info(">>> Found service router: " + tm.toString() + " <<<");
+                    routeInfo = new RouteInfo(router, element, RouteType.parse(SERVICE), null);
                 } else if (types.isSubtype(tm, fragmentTm) || types.isSubtype(tm, fragmentTmV4)) {
-                    logger.info(">>> Found fragment route: " + tm.toString() + " <<<");
-                    routeInfo = new RouteInfo(route, element, RouteType.parse(FRAGMENT), null);
+                    logger.info(">>> Found fragment router: " + tm.toString() + " <<<");
+                    routeInfo = new RouteInfo(router, element, RouteType.parse(FRAGMENT), null);
                 } else {
                     throw new RuntimeException("ARouter::Compiler >>> Found unsupported class type, type = [" + types.toString() + "].");
                 }
@@ -395,7 +395,7 @@ public class RouteProcessor extends AbstractProcessor {
                 routeMetas.add(routeMete);
             }
         } else {
-            logger.warning(">>> Route meta verify error, group is " + routeMete.getGroup() + " <<<");
+            logger.warning(">>> Router meta verify error, group is " + routeMete.getGroup() + " <<<");
         }
     }
 
