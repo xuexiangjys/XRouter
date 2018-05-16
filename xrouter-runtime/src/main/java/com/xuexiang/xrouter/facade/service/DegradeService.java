@@ -14,27 +14,25 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.service;
+
+import android.content.Context;
+
+import com.xuexiang.xrouter.facade.Postcard;
+import com.xuexiang.xrouter.facade.template.IProvider;
 
 /**
- * 字段的类型[Intent]
+ * 路由降级服务
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午12:59
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface DegradeService extends IProvider {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 路由丢失.
+     *
+     * @param postcard 路由信息
+     */
+    void onLost(Context context, Postcard postcard);
 }

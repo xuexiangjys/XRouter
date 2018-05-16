@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.logs;
 
 /**
- * 字段的类型[Intent]
+ * 简易的日志记录接口
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午1:12
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface ILogger {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 打印信息
+     *
+     * @param priority 优先级
+     * @param tag      标签
+     * @param message  信息
+     * @param t        出错信息
+     */
+    void log(int priority, String tag, String message, Throwable t);
+
 }

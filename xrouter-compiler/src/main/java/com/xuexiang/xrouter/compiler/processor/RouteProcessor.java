@@ -8,7 +8,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
-import com.xuexiang.xrouter.annotation.Autowired;
+import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.annotation.Router;
 import com.xuexiang.xrouter.compiler.util.Consts;
 import com.xuexiang.xrouter.compiler.util.Logger;
@@ -221,12 +221,12 @@ public class RouteProcessor extends AbstractProcessor {
                 if (types.isSubtype(tm, type_Activity)) {                 // Activity
                     logger.info(">>> Found activity router: " + tm.toString() + " <<<");
 
-                    // Get all fields annotation by @Autowired
+                    // Get all fields annotation by @AutoWired
                     Map<String, Integer> paramsType = new HashMap<>();
                     for (Element field : element.getEnclosedElements()) {
-                        if (field.getKind().isField() && field.getAnnotation(Autowired.class) != null && !types.isSubtype(field.asType(), iProvider)) {
+                        if (field.getKind().isField() && field.getAnnotation(AutoWired.class) != null && !types.isSubtype(field.asType(), iProvider)) {
                             // It must be field, then it has annotation, but it not be provider.
-                            Autowired paramConfig = field.getAnnotation(Autowired.class);
+                            AutoWired paramConfig = field.getAnnotation(AutoWired.class);
                             paramsType.put(StringUtils.isEmpty(paramConfig.name()) ? field.getSimpleName().toString() : paramConfig.name(), typeUtils.typeExchange(field));
                         }
                     }

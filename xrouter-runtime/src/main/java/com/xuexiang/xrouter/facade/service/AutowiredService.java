@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.service;
+
+
+import com.xuexiang.xrouter.facade.template.IProvider;
 
 /**
- * 字段的类型[Intent]
+ * 实现自动装配（依赖注入）的服务
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午12:56
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface AutowiredService extends IProvider {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 自动装配
+     * @param instance 自动装配的目标
+     */
+    void autowire(Object instance);
 }

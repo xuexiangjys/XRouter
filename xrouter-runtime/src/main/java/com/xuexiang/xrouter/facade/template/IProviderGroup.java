@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.template;
+
+import com.xuexiang.xrouter.model.RouteInfo;
+
+import java.util.Map;
+
 
 /**
- * 字段的类型[Intent]
+ * Provider的组
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午12:10
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+public interface IProviderGroup {
+    /**
+     * 加载Provider注册信息表
+     *
+     * @param providers input
+     */
+    void loadInto(Map<String, RouteInfo> providers);
 }

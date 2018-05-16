@@ -8,7 +8,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import com.xuexiang.xrouter.annotation.Autowired;
+import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.compiler.util.Consts;
 import com.xuexiang.xrouter.compiler.util.Logger;
 import com.xuexiang.xrouter.compiler.util.TypeUtils;
@@ -89,7 +89,7 @@ public class AutowiredProcessor extends AbstractProcessor {
         if (CollectionUtils.isNotEmpty(set)) {
             try {
                 logger.info(">>> Found autowired field, start... <<<");
-                categories(roundEnvironment.getElementsAnnotatedWith(Autowired.class));
+                categories(roundEnvironment.getElementsAnnotatedWith(AutoWired.class));
                 generateHelper();
 
             } catch (Exception e) {
@@ -142,7 +142,7 @@ public class AutowiredProcessor extends AbstractProcessor {
 
                 // Generate method body, start inject.
                 for (Element element : childs) {
-                    Autowired fieldConfig = element.getAnnotation(Autowired.class);
+                    AutoWired fieldConfig = element.getAnnotation(AutoWired.class);
                     String fieldName = element.getSimpleName().toString();
                     if (types.isSubtype(element.asType(), iProvider)) {  // It's provider
                         if ("".equals(fieldConfig.name())) {    // User has not set service path, then use byType.
@@ -217,7 +217,7 @@ public class AutowiredProcessor extends AbstractProcessor {
                 logger.info(">>> " + parent.getSimpleName() + " has been processed, " + fileName + " has been generated. <<<");
             }
 
-            logger.info(">>> Autowired processor stop. <<<");
+            logger.info(">>> AutoWired processor stop. <<<");
         }
     }
 

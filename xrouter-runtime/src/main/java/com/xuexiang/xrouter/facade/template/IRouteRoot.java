@@ -14,7 +14,21 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter;
+package com.xuexiang.xrouter.facade.template;
 
-public class MyClass {
+import java.util.Map;
+
+/**
+ * 路由的根元素
+ *
+ * @author xuexiang
+ * @since 2018/5/16 下午11:58
+ */
+public interface IRouteRoot {
+
+    /**
+     * 加载路由组元素
+     * @param routes input
+     */
+    void loadInto(Map<String, Class<? extends IRouteGroup>> routes);
 }

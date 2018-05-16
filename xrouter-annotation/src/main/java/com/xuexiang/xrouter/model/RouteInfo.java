@@ -25,20 +25,43 @@ import java.util.Map;
 import javax.lang.model.element.Element;
 
 /**
- * <pre>
- *     desc   : 路由信息
- *     author : xuexiang
- *     time   : 2018/5/15 下午11:24
- * </pre>
+ * 路由信息
+ *
+ * @author xuexiang
+ * @since 2018/5/17 上午12:32
  */
 public class RouteInfo {
-    private RouteType type;         // Type of route
+    /**
+     * 路由的类型
+     */
+    private RouteType type;
+    /**
+     *
+     */
     private Element rawType;        // Raw type of route
-    private Class<?> destination;   // Destination
-    private String path;            // Path of route
-    private String group;           // Group of route
-    private int priority = -1;      // The smaller the number, the higher the priority
+    /**
+     * 路由描述信息
+     */
+    private Class<?> destination;
+    /**
+     * 路由路径
+     */
+    private String path;
+    /**
+     * 路由所在的组
+     */
+    private String group;
+    /**
+     * 路由的优先级【数字越小，优先级越高】
+     */
+    private int priority = -1;
+    /**
+     * 拓展属性
+     */
     private int extra;              // Extra data
+    /**
+     * 参数类型
+     */
     private Map<String, Integer> paramsType;  // Param type
 
     public RouteInfo() {

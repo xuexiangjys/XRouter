@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.template;
+
+import java.util.Map;
 
 /**
- * 字段的类型[Intent]
+ * 拦截器组
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午12:12
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+public interface IInterceptorGroup {
+    /**
+     * 加载拦截器
+     *
+     * @param interceptor input
+     */
+    void loadInto(Map<Integer, Class<? extends IInterceptor>> interceptor);
 }

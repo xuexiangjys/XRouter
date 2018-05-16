@@ -14,27 +14,31 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.service;
+
+import android.net.Uri;
+
+import com.xuexiang.xrouter.facade.template.IProvider;
 
 /**
- * 字段的类型[Intent]
+ * 路由路径重定向
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午1:01
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface PathReplaceService extends IProvider {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 重定向普通String类型的路由路径
+     *
+     * @param path raw path
+     */
+    String forString(String path);
+
+    /**
+     * 重定向资源uri类型的路由路径
+     *
+     * @param uri raw uri
+     */
+    Uri forUri(Uri uri);
 }

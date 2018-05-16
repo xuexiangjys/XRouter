@@ -14,27 +14,34 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.service;
+
+import com.xuexiang.xrouter.facade.template.IProvider;
+
+import java.lang.reflect.Type;
 
 /**
- * 字段的类型[Intent]
+ * 序列化服务
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午1:04
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface SerializationService extends IProvider {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 对象序列化为json
+     *
+     * @param instance obj
+     * @return json string
+     */
+    String object2Json(Object instance);
+
+    /**
+     * json反序列化为对象
+     *
+     * @param input json string
+     * @param clazz object type
+     * @return instance of object
+     */
+    <T> T parseObject(String input, Type clazz);
 }

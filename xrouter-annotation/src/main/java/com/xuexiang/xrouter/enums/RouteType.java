@@ -17,18 +17,17 @@
 package com.xuexiang.xrouter.enums;
 
 /**
- * <pre>
- *     desc   : 路由的类型
- *     author : xuexiang
- *     time   : 2018/5/16 上午12:51
- * </pre>
+ * 路由的类型
+ *
+ * @author xuexiang
+ * @since 2018/5/17 上午12:32
  */
 public enum RouteType {
     ACTIVITY(0, "android.app.Activity"),
     SERVICE(1, "android.app.Service"),
-    PROVIDER(2, "com.xuexiang.android.xrouter.facade.template.IProvider"),
+    PROVIDER(2, "com.xuexiang.xrouter.facade.template.IProvider"),
     CONTENT_PROVIDER(-1, "android.app.ContentProvider"),
-    BOARDCAST(-1, ""),
+    BROADCAST(-1, ""),
     METHOD(-1, ""),
     FRAGMENT(-1, "android.app.Fragment"),
     UNKNOWN(-1, "Unknown route type");
@@ -59,13 +58,17 @@ public enum RouteType {
         this.className = className;
     }
 
+    /**
+     * 根据名称解析路由类型
+     * @param name
+     * @return
+     */
     public static RouteType parse(String name) {
         for (RouteType routeType : RouteType.values()) {
             if (routeType.getClassName().equals(name)) {
                 return routeType;
             }
         }
-
         return UNKNOWN;
     }
 }

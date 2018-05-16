@@ -19,11 +19,10 @@ package com.xuexiang.xrouter.util
 import org.gradle.api.Project
 
 /**
- * <pre>
- *     desc   : 日志记录
- *     author : xuexiang
- *     time   : 2018/5/15 下午11:25
- * </pre>
+ * 日志记录
+ *
+ * @author xuexiang
+ * @since 2018/5/17 上午12:53
  */
 class Logger {
     static org.gradle.api.logging.Logger logger

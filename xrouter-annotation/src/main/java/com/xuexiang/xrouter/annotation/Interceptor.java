@@ -14,27 +14,29 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * 字段的类型[Intent]
+ * 路由拦截器 <br>注意 : 该注解只能表注#{IInterceptor}的实现类
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午12:16
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.CLASS)
+public @interface Interceptor {
+    /**
+     * 拦截器的优先级, XRouter将按优先级高低依次执行拦截.
+     */
+    int priority();
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 拦截器的名称
+     */
+    String name() default "Default";
 }

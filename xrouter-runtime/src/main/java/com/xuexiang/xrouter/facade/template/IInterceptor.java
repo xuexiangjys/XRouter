@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.template;
+
+import com.xuexiang.xrouter.facade.Postcard;
+import com.xuexiang.xrouter.facade.callback.InterceptorCallback;
 
 /**
- * 字段的类型[Intent]
+ * 路由拦截器，在路由导航时可注入一些自定义逻辑
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/17 上午12:13
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface IInterceptor extends IProvider {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 拦截器的执行操作
+     *
+     * @param postcard 路由信息
+     * @param callback 拦截回调
+     */
+    void process(Postcard postcard, InterceptorCallback callback);
 }

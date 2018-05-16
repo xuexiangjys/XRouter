@@ -22,35 +22,39 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <pre>
- *     desc   : 路由创建注解
- *     author : xuexiang
- *     time   : 2018/5/16 上午12:49
- * </pre>
+ * 路由创建注解
+ *
+ * @author xuexiang
+ * @since 2018/5/17 上午12:32
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.CLASS)
 public @interface Router {
 
     /**
-     * Path of route
+     * 路由的路径
      */
     String path();
 
     /**
-     * Used to merger routes, the group name MUST BE USE THE COMMON WORDS !!!
+     * 路由所在的组
      */
     String group() default "";
 
     /**
-     * Name of route, used to generate javadoc.
+     * 路由的名称
      */
     String name() default "undefined";
     
     /**
-     * Extra data, can be set by user.
+     * 路由的拓展属性，这个属性是一个int值，换句话说，单个int有4字节，也就是32位，可以配置32个开关。
      * Ps. U should use the integer num sign the switch, by bits. 10001010101010
      */
     int extras() default Integer.MIN_VALUE;
+
+    /**
+     * 路由的优先级
+     */
+    int priority() default -1;
 
 }

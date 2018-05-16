@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.template;
+
+import com.xuexiang.xrouter.model.RouteInfo;
+
+import java.util.Map;
 
 /**
- * 字段的类型[Intent]
+ * 路由的组元素
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/16 下午11:59
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+public interface IRouteGroup {
+    /**
+     * 将路由信息填充至路由组
+     */
+    void loadInto(Map<String, RouteInfo> atlas);
 }

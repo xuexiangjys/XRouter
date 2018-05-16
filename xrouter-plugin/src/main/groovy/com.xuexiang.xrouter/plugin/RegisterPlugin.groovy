@@ -23,11 +23,10 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 /**
- * <pre>
- *     desc   : 自动注册路由表的插件
- *     author : xuexiang
- *     time   : 2018/5/15 下午11:25
- * </pre>
+ * 自动注册路由表的插件
+ *
+ * @author xuexiang
+ * @since 2018/5/17 上午12:39
  */
 public class RegisterPlugin implements Plugin<Project> {
 
@@ -45,9 +44,9 @@ public class RegisterPlugin implements Plugin<Project> {
 
             //init xrouter-auto-register settings
             ArrayList<ScanSetting> list = new ArrayList<>(3)
-            list.add(new ScanSetting('IRouteRoot'))
-            list.add(new ScanSetting('IInterceptorGroup'))
-            list.add(new ScanSetting('IProviderGroup'))
+            list.add(new ScanSetting('IRouteRoot'))   //扫描根路由
+            list.add(new ScanSetting('IInterceptorGroup')) //扫描拦截器组
+            list.add(new ScanSetting('IProviderGroup')) //扫描Provider组
             RegisterTransform.registerList = list
             //register this plugin
             android.registerTransform(transformImpl)

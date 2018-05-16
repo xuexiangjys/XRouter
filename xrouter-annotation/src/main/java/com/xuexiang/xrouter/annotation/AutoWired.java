@@ -22,15 +22,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <pre>
- *     desc   : 参数自动填充
- *     author : xuexiang
- *     time   : 2018/5/16 上午12:51
- * </pre>
+ * 实现自动装配（依赖注入）的注解
+ *
+ * @author xuexiang
+ * @since 2018/5/17 上午12:15
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.CLASS)
-public @interface Autowired {
+public @interface AutoWired {
 
     // Mark param's name or service name.
     String name() default "";

@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.template;
+
+import android.content.Context;
 
 /**
- * 字段的类型[Intent]
+ * 对外提供接口的基类接口
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/16 下午11:51
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface IProvider {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 进程初始化的方法
+     *
+     * @param context 上下文
+     */
+    void init(Context context);
 }

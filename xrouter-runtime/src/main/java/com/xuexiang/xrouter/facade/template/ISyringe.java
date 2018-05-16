@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.template;
 
 /**
- * 字段的类型[Intent]
+ * 注射器实现接口，实现依赖注入的方法
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/16 下午11:56
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+public interface ISyringe {
+    /**
+     * 依赖注入
+     * @param target 依赖注入的目标
+     */
+    void inject(Object target);
 }

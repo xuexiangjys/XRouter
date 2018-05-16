@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.service;
+
+
+import com.xuexiang.xrouter.facade.template.IProvider;
 
 /**
- * 字段的类型[Intent]
+ * Get class by user, maybe someone use InstantRun and other tech will move dex files.
  *
- * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @author zhilong <a href="mailto:zhilong.lzl@alibaba-inc.com">Contact me.</a>
+ * @version 1.0
+ * @since 2017/2/23 下午12:16
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
-
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+public interface ClassLoaderService extends IProvider {
+    Class<?> forName();
 }

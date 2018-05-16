@@ -14,27 +14,33 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.callback;
+
+
+import com.xuexiang.xrouter.facade.Postcard;
 
 /**
- * 字段的类型[Intent]
+ * 简单的路由导航回调
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/16 下午11:50
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public abstract class NavCallback implements NavigationCallback {
+    @Override
+    public void onFound(Postcard postcard) {
+        // Do nothing
+    }
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    @Override
+    public void onLost(Postcard postcard) {
+        // Do nothing
+    }
+
+    @Override
+    public abstract void onArrival(Postcard postcard);
+
+    @Override
+    public void onInterrupt(Postcard postcard) {
+        // Do nothing
+    }
 }

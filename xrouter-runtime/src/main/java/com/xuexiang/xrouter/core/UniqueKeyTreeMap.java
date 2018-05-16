@@ -14,27 +14,30 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.core;
+
+import java.util.TreeMap;
 
 /**
- * 字段的类型[Intent]
+ * 存放唯一KEY的TreeMap
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/16 下午11:41
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public class UniqueKeyTreeMap<K, V> extends TreeMap<K, V> {
+    private String tipText;
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    public UniqueKeyTreeMap(String exceptionText) {
+        super();
+        tipText = exceptionText;
+    }
+
+    @Override
+    public V put(K key, V value) {
+        if (containsKey(key)) {
+            throw new RuntimeException(String.format(tipText, key));
+        } else {
+            return super.put(key, value);
+        }
+    }
 }

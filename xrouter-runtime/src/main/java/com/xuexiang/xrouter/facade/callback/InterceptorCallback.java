@@ -14,27 +14,30 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.enums;
+package com.xuexiang.xrouter.facade.callback;
+
+
+import com.xuexiang.xrouter.facade.Postcard;
 
 /**
- * 字段的类型[Intent]
+ * 拦截器的回调
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:32
+ * @since 2018/5/16 下午11:43
  */
-public enum TypeKind {
-    // Base type
-    BOOLEAN,
-    BYTE,
-    SHORT,
-    INT,
-    LONG,
-    CHAR,
-    FLOAT,
-    DOUBLE,
+public interface InterceptorCallback {
 
-    // Other type
-    STRING,
-    PARCELABLE,
-    OBJECT
+    /**
+     * 继续执行
+     *
+     * @param postcard 路由信息
+     */
+    void onContinue(Postcard postcard);
+
+    /**
+     * 执行拦截, 当该方法执行后，通道将会被销毁
+     *
+     * @param exception 拦截的原因.
+     */
+    void onInterrupt(Throwable exception);
 }
