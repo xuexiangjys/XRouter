@@ -40,7 +40,7 @@ public class RouteInfo {
      */
     private Element rawType;        // Raw type of route
     /**
-     * 路由描述信息
+     * 路由目标类
      */
     private Class<?> destination;
     /**
@@ -60,7 +60,7 @@ public class RouteInfo {
      */
     private int extra;              // Extra data
     /**
-     * 参数类型
+     * 所有参数的类型集合【key为参数的key，value为参数的类型】
      */
     private Map<String, Integer> paramsType;  // Param type
 

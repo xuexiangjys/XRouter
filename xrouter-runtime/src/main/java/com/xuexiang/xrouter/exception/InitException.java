@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.facade.service;
-
-
-import com.xuexiang.xrouter.facade.template.IProvider;
+package com.xuexiang.xrouter.exception;
 
 /**
- * 实现自动装配（依赖注入）的服务
+ * 初始化相关异常
  *
  * @author xuexiang
- * @since 2018/5/17 上午12:56
+ * @since 2018/5/17 下午11:12
  */
-public interface AutowiredService extends IProvider {
-
+public class InitException extends RuntimeException {
     /**
-     * 自动装配
-     * @param instance 自动装配的目标
+     * 构造方法
+     * @param detailMessage 初始化相关的错误信息
      */
-    void autowire(Object instance);
+    public InitException(String detailMessage) {
+        super(detailMessage);
+    }
 }

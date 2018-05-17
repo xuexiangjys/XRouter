@@ -31,7 +31,7 @@ import android.util.SparseArray;
 import com.xuexiang.xrouter.facade.callback.NavigationCallback;
 import com.xuexiang.xrouter.facade.service.SerializationService;
 import com.xuexiang.xrouter.facade.template.IProvider;
-import com.xuexiang.xrouter.launcher.ARouter;
+import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouter.model.RouteInfo;
 
 import java.io.Serializable;
@@ -161,7 +161,7 @@ public final class Postcard extends RouteInfo {
      * @param context Activity and so on.
      */
     public Object navigation(Context context, NavigationCallback callback) {
-        return ARouter.getInstance().navigation(context, this, -1, callback);
+        return XRouter.getInstance().navigation(context, this, -1, callback);
     }
 
     /**
@@ -181,7 +181,7 @@ public final class Postcard extends RouteInfo {
      * @param requestCode startActivityForResult's param
      */
     public void navigation(Activity mContext, int requestCode, NavigationCallback callback) {
-        ARouter.getInstance().navigation(mContext, this, requestCode, callback);
+        XRouter.getInstance().navigation(mContext, this, requestCode, callback);
     }
 
     /**
@@ -255,7 +255,7 @@ public final class Postcard extends RouteInfo {
      * @return current
      */
     public Postcard withObject(@Nullable String key, @Nullable Object value) {
-        serializationService = ARouter.getInstance().navigation(SerializationService.class);
+        serializationService = XRouter.getInstance().navigation(SerializationService.class);
         mBundle.putString(key, serializationService.object2Json(value));
         return this;
     }
