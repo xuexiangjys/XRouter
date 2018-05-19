@@ -63,8 +63,7 @@ public final class XRouter {
     }
 
     /**
-     * Get instance of router. A
-     * All feature U use, will be starts here.
+     * 获取XRouter的实例
      */
     public static XRouter getInstance() {
         if (!hasInit) {
@@ -81,22 +80,39 @@ public final class XRouter {
         }
     }
 
+    /**
+     * 打开调试模式
+     */
     public static synchronized void openDebug() {
         _XRouter.openDebug();
     }
 
+    /**
+     * 是否是调试模式
+     * @return
+     */
     public static boolean debuggable() {
         return _XRouter.debuggable();
     }
 
+    /**
+     * 打开日志
+     */
     public static synchronized void openLog() {
         _XRouter.openLog();
     }
 
+    /**
+     * 设置拦截器执行的线程
+     * @param tpe
+     */
     public static synchronized void setExecutor(ThreadPoolExecutor tpe) {
         _XRouter.setExecutor(tpe);
     }
 
+    /**
+     * 销毁路由
+     */
     public synchronized void destroy() {
         _XRouter.destroy();
         hasInit = false;
@@ -110,19 +126,23 @@ public final class XRouter {
         return _XRouter.isMonitorMode();
     }
 
+    /**
+     * 设置日志接口
+     * @param userLogger
+     */
     public static void setLogger(ILogger userLogger) {
         _XRouter.setLogger(userLogger);
     }
 
     /**
-     * Inject params and services.
+     * 注入参数和服务
      */
     public void inject(Object target) {
         _XRouter.inject(target);
     }
 
     /**
-     * Build the roadmap, draw a postcard.
+     * 构建一个路由表, draw a postcard.
      *
      * @param path Where you go.
      */
@@ -131,7 +151,7 @@ public final class XRouter {
     }
 
     /**
-     * Build the roadmap, draw a postcard.
+     * 构建一个路由表, draw a postcard.
      *
      * @param path  Where you go.
      * @param group The group of path.
@@ -142,7 +162,7 @@ public final class XRouter {
     }
 
     /**
-     * Build the roadmap, draw a postcard.
+     * 构建一个路由表, draw a postcard.
      *
      * @param url the path
      */
@@ -151,7 +171,7 @@ public final class XRouter {
     }
 
     /**
-     * Launch the navigation by type
+     * 获取服务/服务发现
      *
      * @param service interface of service
      * @param <T>     return type
@@ -162,12 +182,12 @@ public final class XRouter {
     }
 
     /**
-     * Launch the navigation.
+     * 启动路由导航
      *
-     * @param context    .
-     * @param postcard    .
+     * @param context
+     * @param postcard
      * @param requestCode Set for startActivityForResult
-     * @param callback    cb
+     * @param callback    路由导航回调
      */
     public Object navigation(Context context, Postcard postcard, int requestCode, NavigationCallback callback) {
         return _XRouter.getInstance().navigation(context, postcard, requestCode, callback);

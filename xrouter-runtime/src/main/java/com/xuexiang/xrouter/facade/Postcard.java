@@ -46,7 +46,6 @@ import java.util.ArrayList;
  * @since 2018/5/17 上午1:07
  */
 public final class Postcard extends RouteInfo {
-    // Base
     /**
      * 统一资源标识符
      */
@@ -93,27 +92,6 @@ public final class Postcard extends RouteInfo {
      */
     private int exitAnim = -1;
 
-    public Bundle getOptionsBundle() {
-        return optionsCompat;
-    }
-
-    public int getEnterAnim() {
-        return enterAnim;
-    }
-
-    public int getExitAnim() {
-        return exitAnim;
-    }
-
-    public IProvider getProvider() {
-        return provider;
-    }
-
-    public Postcard setProvider(IProvider provider) {
-        this.provider = provider;
-        return this;
-    }
-
     public Postcard() {
         this(null, null);
     }
@@ -129,25 +107,56 @@ public final class Postcard extends RouteInfo {
         this.mBundle = (null == bundle ? new Bundle() : bundle);
     }
 
-    public boolean isGreenChannel() {
-        return greenChannel;
-    }
-
-    public Object getTag() {
-        return tag;
-    }
-
+    /**
+     * 设置错误信息
+     *
+     * @param tag
+     * @return
+     */
     public Postcard setTag(Object tag) {
         this.tag = tag;
         return this;
+    }
+
+    public Uri getUri() {
+        return uri;
     }
 
     public Bundle getExtras() {
         return mBundle;
     }
 
+    public Object getTag() {
+        return tag;
+    }
+
     public int getTimeout() {
         return timeout;
+    }
+
+    public IProvider getProvider() {
+        return provider;
+    }
+
+    public boolean isGreenChannel() {
+        return greenChannel;
+    }
+
+    public Bundle getOptionsBundle() {
+        return optionsCompat;
+    }
+
+    public int getEnterAnim() {
+        return enterAnim;
+    }
+
+    public int getExitAnim() {
+        return exitAnim;
+    }
+
+    public Postcard setProvider(IProvider provider) {
+        this.provider = provider;
+        return this;
     }
 
     /**
@@ -161,25 +170,26 @@ public final class Postcard extends RouteInfo {
         return this;
     }
 
-    public Uri getUri() {
-        return uri;
-    }
-
+    /**
+     * 设置统一资源标识符
+     *
+     * @param uri
+     * @return
+     */
     public Postcard setUri(Uri uri) {
         this.uri = uri;
         return this;
     }
 
     /**
-     * Navigation to the route with path in postcard.
-     * No param, will be use application context.
+     * 路由导航
      */
     public Object navigation() {
         return navigation(null);
     }
 
     /**
-     * Navigation to the route with path in postcard.
+     * 路由导航
      *
      * @param context Activity and so on.
      */
@@ -188,7 +198,7 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * Navigation to the route with path in postcard.
+     * 路由导航
      *
      * @param context Activity and so on.
      */
@@ -197,9 +207,9 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * Navigation to the route with path in postcard.
+     * 路由导航（startActivityForResult）
      *
-     * @param context    Activity and so on.
+     * @param context     Activity and so on.
      * @param requestCode startActivityForResult's param
      */
     public void navigation(Activity context, int requestCode) {
@@ -207,9 +217,9 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * Navigation to the route with path in postcard.
+     * 路由导航（startActivityForResult）
      *
-     * @param context    Activity and so on.
+     * @param context     Activity and so on.
      * @param requestCode startActivityForResult's param
      */
     public void navigation(Activity context, int requestCode, NavigationCallback callback) {
@@ -609,10 +619,10 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * Set normal transition anim
+     * 设置切换动画
      *
-     * @param enterAnim enter
-     * @param exitAnim  exit
+     * @param enterAnim 进入的动画
+     * @param exitAnim  退出的动画
      * @return current
      */
     public Postcard withTransition(int enterAnim, int exitAnim) {

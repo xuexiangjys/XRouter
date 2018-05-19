@@ -38,6 +38,7 @@ import com.xuexiang.xrouter.facade.service.AutoWiredService;
 import com.xuexiang.xrouter.facade.service.DegradeService;
 import com.xuexiang.xrouter.facade.service.InterceptorService;
 import com.xuexiang.xrouter.facade.service.PathReplaceService;
+import com.xuexiang.xrouter.facade.template.IProvider;
 import com.xuexiang.xrouter.logs.ILogger;
 import com.xuexiang.xrouter.logs.XRLog;
 import com.xuexiang.xrouter.thread.DefaultPoolExecutor;
@@ -228,7 +229,7 @@ final class _XRouter {
     }
 
     /**
-     * 服务发现
+     * 服务发现（需要实现{@link IProvider}接口）
      *
      * @param service
      * @param <T>
@@ -250,12 +251,12 @@ final class _XRouter {
     }
 
     /**
-     * Use router navigation.
+     * 进行路由导航
      *
      * @param context     Activity or null.
-     * @param postcard    Route metas
-     * @param requestCode RequestCode
-     * @param callback    cb
+     * @param postcard    路由信息容器
+     * @param requestCode 请求码
+     * @param callback    路由导航回调
      */
     protected Object navigation(final Context context, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
         try {
