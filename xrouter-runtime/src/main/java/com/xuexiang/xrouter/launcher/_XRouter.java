@@ -46,6 +46,9 @@ import com.xuexiang.xrouter.utils.TextUtils;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_AUTOWIRED;
+import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_INTERCEPTORS;
+
 /**
  * XRouter 核心功能
  *
@@ -58,6 +61,7 @@ final class _XRouter {
     private volatile static _XRouter sInstance = null;
     private volatile static boolean hasInit = false;
     private volatile static ThreadPoolExecutor executor = DefaultPoolExecutor.getInstance();
+    private static Handler mMainHandler = new Handler(Looper.getMainLooper());
     private static Context mContext;
 
     private static InterceptorService interceptorService;
@@ -138,7 +142,7 @@ final class _XRouter {
     }
 
     static void inject(Object target) {
-        AutoWiredService autoWiredService = ((AutoWiredService) XRouter.getInstance().build("/xrouter/service/autowired").navigation());
+        AutoWiredService autoWiredService = ((AutoWiredService) XRouter.getInstance().build(ROUTE_SERVICE_AUTOWIRED).navigation());
         if (autoWiredService != null) {
             autoWiredService.autoWire(target);
         }
@@ -154,7 +158,7 @@ final class _XRouter {
             throw new HandlerException(Consts.TAG + "Parameter is invalid!");
         } else {
             PathReplaceService pService = XRouter.getInstance().navigation(PathReplaceService.class);
-            if (null != pService) {
+            if (pService != null) {
                 path = pService.forString(path);
             }
             return build(path, extractGroup(path));
@@ -172,7 +176,7 @@ final class _XRouter {
             throw new HandlerException(Consts.TAG + "Parameter is invalid!");
         } else {
             PathReplaceService pService = XRouter.getInstance().navigation(PathReplaceService.class);
-            if (null != pService) {
+            if (pService != null) {
                 path = pService.forString(path);
             }
             return new Postcard(path, group);
@@ -185,11 +189,11 @@ final class _XRouter {
      * @param uri 资源路径
      */
     protected Postcard build(Uri uri) {
-        if (null == uri || TextUtils.isEmpty(uri.toString())) {
+        if (uri == null || TextUtils.isEmpty(uri.toString())) {
             throw new HandlerException(Consts.TAG + "Parameter invalid!");
         } else {
             PathReplaceService pService = XRouter.getInstance().navigation(PathReplaceService.class);
-            if (null != pService) {
+            if (pService != null) {
                 uri = pService.forUri(uri);
             }
             return new Postcard(uri.getPath(), extractGroup(uri.getPath()), uri, null);
@@ -220,7 +224,7 @@ final class _XRouter {
 
     static void afterInit() {
         // Trigger interceptor init, use byName.
-        interceptorService = (InterceptorService) XRouter.getInstance().build("/xrouter/service/interceptor").navigation();
+        interceptorService = (InterceptorService) XRouter.getInstance().build(ROUTE_SERVICE_INTERCEPTORS).navigation();
     }
 
     /**
@@ -234,7 +238,7 @@ final class _XRouter {
         try {
             Postcard postcard = LogisticsCenter.buildProvider(service.getName());
             // Compatible 1.0.5 compiler sdk.
-            if (null == postcard) { // No service, or this service in old version.
+            if (postcard == null) { // No service, or this service in old version.
                 postcard = LogisticsCenter.buildProvider(service.getSimpleName());
             }
             LogisticsCenter.completion(postcard);
@@ -265,11 +269,11 @@ final class _XRouter {
                         " Group = [" + postcard.getGroup() + "]", Toast.LENGTH_LONG).show();
             }
 
-            if (null != callback) {
+            if (callback != null) {
                 callback.onLost(postcard);
             } else {    // No callback for this invoke, then we use the global degrade service.
                 DegradeService degradeService = XRouter.getInstance().navigation(DegradeService.class);
-                if (null != degradeService) {
+                if (degradeService != null) {
                     degradeService.onLost(context, postcard);
                 }
             }
@@ -277,16 +281,16 @@ final class _XRouter {
             return null;
         }
 
-        if (null != callback) {
+        if (callback != null) {
             callback.onFound(postcard);
         }
 
         if (!postcard.isGreenChannel()) {   // It must be run in async thread, maybe interceptor cost too mush time made ANR.
             interceptorService.doInterceptions(postcard, new InterceptorCallback() {
                 /**
-                 * Continue process
+                 * 继续执行下一个拦截器
                  *
-                 * @param postcard route meta
+                 * @param postcard 路由信息
                  */
                 @Override
                 public void onContinue(Postcard postcard) {
@@ -294,16 +298,15 @@ final class _XRouter {
                 }
 
                 /**
-                 * Interrupt process, pipeline will be destory when this method called.
+                 * 拦截中断, 当该方法执行后，通道将会被销毁
                  *
-                 * @param exception Reson of interrupt.
+                 * @param exception 中断的原因.
                  */
                 @Override
                 public void onInterrupt(Throwable exception) {
-                    if (null != callback) {
+                    if (callback != null) {
                         callback.onInterrupt(postcard);
                     }
-
                     XRLog.i("Navigation failed, termination by interceptor : " + exception.getMessage());
                 }
             });
@@ -314,6 +317,15 @@ final class _XRouter {
         return null;
     }
 
+    /**
+     * 真正执行导航的方法
+     *
+     * @param context
+     * @param postcard    路由容器
+     * @param requestCode 请求code
+     * @param callback    导航回调
+     * @return
+     */
     private Object _navigation(final Context context, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
         final Context currentContext = null == context ? mContext : context;
         switch (postcard.getType()) {
@@ -324,14 +336,14 @@ final class _XRouter {
 
                 // Set flags.
                 int flags = postcard.getFlags();
-                if (-1 != flags) {
+                if (flags != -1) {
                     intent.setFlags(flags);
                 } else if (!(currentContext instanceof Activity)) {    // Non activity, need less one flag.
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
 
                 // Navigation in main looper.
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                mMainHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         if (requestCode > 0) {  // Need start for result
@@ -344,12 +356,11 @@ final class _XRouter {
                             ((Activity) currentContext).overridePendingTransition(postcard.getEnterAnim(), postcard.getExitAnim());
                         }
 
-                        if (null != callback) { // Navigation over.
+                        if (callback != null) { // Navigation over.
                             callback.onArrival(postcard);
                         }
                     }
                 });
-
                 break;
             case PROVIDER:
                 return postcard.getProvider();

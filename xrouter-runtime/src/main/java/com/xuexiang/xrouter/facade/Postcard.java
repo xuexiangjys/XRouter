@@ -47,18 +47,50 @@ import java.util.ArrayList;
  */
 public final class Postcard extends RouteInfo {
     // Base
+    /**
+     * 统一资源标识符
+     */
     private Uri uri;
-    private Object tag;             // A tag prepare for some thing wrong.
-    private Bundle mBundle;         // Data to transform
-    private int flags = -1;         // Flags of route
+    /**
+     * 暂时存放出错的信息
+     */
+    private Object tag;
+    /**
+     * 路由携带的数据
+     */
+    private Bundle mBundle;
+    /**
+     * 路由的flags
+     */
+    private int flags = -1;
+    /**
+     * 路由超时时间（包括拦截器执行的时间，单位: 秒）
+     */
     private int timeout = 300;      // Navigation timeout, TimeUnit.Second
-    private IProvider provider;     // It will be set value, if this postcard was provider.
+    /**
+     * RouteType = PROVIDER 时，将会被赋值
+     */
+    private IProvider provider;
+    /**
+     * 绿色通道，跳过所有的拦截器
+     */
     private boolean greenChannel;
+    /**
+     * 序列化服务
+     */
     private SerializationService serializationService;
 
-    // Animation
-    private Bundle optionsCompat;    // The transition animation of activity
+    /**
+     * activity的切换动画
+     */
+    private Bundle optionsCompat;
+    /**
+     * 进入动画
+     */
     private int enterAnim = -1;
+    /**
+     * 退出动画
+     */
     private int exitAnim = -1;
 
     public Bundle getOptionsBundle() {
@@ -119,7 +151,7 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * Set timeout of navigation this time.
+     * 设置导航的超时时间
      *
      * @param timeout timeout
      * @return this
@@ -167,25 +199,25 @@ public final class Postcard extends RouteInfo {
     /**
      * Navigation to the route with path in postcard.
      *
-     * @param mContext    Activity and so on.
+     * @param context    Activity and so on.
      * @param requestCode startActivityForResult's param
      */
-    public void navigation(Activity mContext, int requestCode) {
-        navigation(mContext, requestCode, null);
+    public void navigation(Activity context, int requestCode) {
+        navigation(context, requestCode, null);
     }
 
     /**
      * Navigation to the route with path in postcard.
      *
-     * @param mContext    Activity and so on.
+     * @param context    Activity and so on.
      * @param requestCode startActivityForResult's param
      */
-    public void navigation(Activity mContext, int requestCode, NavigationCallback callback) {
-        XRouter.getInstance().navigation(mContext, this, requestCode, callback);
+    public void navigation(Activity context, int requestCode, NavigationCallback callback) {
+        XRouter.getInstance().navigation(context, this, requestCode, callback);
     }
 
     /**
-     * Green channel, it will skip all of interceptors.
+     * 设置绿色通道，跳过所有的拦截器
      *
      * @return this
      */
@@ -195,13 +227,12 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * BE ATTENTION TO THIS METHOD WAS <P>SET, NOT ADD!</P>
+     * 设置Bundle
      */
     public Postcard with(Bundle bundle) {
-        if (null != bundle) {
+        if (bundle != null) {
             mBundle = bundle;
         }
-
         return this;
     }
 
@@ -248,7 +279,7 @@ public final class Postcard extends RouteInfo {
     }
 
     /**
-     * Set object value, the value will be convert to string by 'Fastjson'
+     * 设置Object参数【使用前需要设置序列化服务 {@link SerializationService}】
      *
      * @param key   a String, or null
      * @param value a Object, or null

@@ -164,12 +164,12 @@ public final class XRouter {
     /**
      * Launch the navigation.
      *
-     * @param mContext    .
+     * @param context    .
      * @param postcard    .
      * @param requestCode Set for startActivityForResult
      * @param callback    cb
      */
-    public Object navigation(Context mContext, Postcard postcard, int requestCode, NavigationCallback callback) {
-        return _XRouter.getInstance().navigation(mContext, postcard, requestCode, callback);
+    public Object navigation(Context context, Postcard postcard, int requestCode, NavigationCallback callback) {
+        return _XRouter.getInstance().navigation(context, postcard, requestCode, callback);
     }
 }

@@ -42,7 +42,7 @@ class Warehouse {
     static Map<Class, IProvider> providers = new HashMap<>();
     static Map<String, RouteInfo> providersIndex = new HashMap<>();
 
-    // Cache interceptor
+    // Cache interceptor，因为使用的是TreeMap，且Key为Integer,从而实现拦截器的优先级
     static Map<Integer, Class<? extends IInterceptor>> interceptorsIndex = new UniqueKeyTreeMap<>("More than one interceptors use same priority [%s]");
     static List<IInterceptor> interceptors = new ArrayList<>();
 

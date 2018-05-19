@@ -33,9 +33,13 @@ public final class Consts {
     public static final String DOT = ".";
     public static final String ROUTE_ROOT_PAKCAGE = "com.xuexiang.xrouter.routes";
 
+    public static final String ROUTE_SERVICE_INTERCEPTORS = "/xrouter/service/interceptor";
+    public static final String ROUTE_SERVICE_AUTOWIRED = "/xrouter/service/autowired";
+    /**
+     * 路由缓存
+     */
     public static final String XROUTER_SP_CACHE_KEY = "SP_XROUTER_CACHE";
     public static final String XROUTER_SP_KEY_MAP = "SP_XROUTER_MAP";
-
     public static final String LAST_VERSION_NAME = "LAST_VERSION_NAME";
     public static final String LAST_VERSION_CODE = "LAST_VERSION_CODE";
 }

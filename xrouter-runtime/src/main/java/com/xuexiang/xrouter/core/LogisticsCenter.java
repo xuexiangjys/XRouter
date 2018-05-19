@@ -162,7 +162,7 @@ public class LogisticsCenter {
             loadRouterMap();
             if (registerByPlugin) {
                 XRLog.i("Load router map by xrouter-plugin.");
-            } else {   //非xrouter-plugin加载，就扫描ROUTE_ROOT_PAKCAGE包手动加载路由信息表
+            } else {   //非xrouter-plugin加载，就扫描"com.xuexiang.xrouter.routes"包手动加载路由信息表
                 Set<String> routerMap;
                 // 只有当应用是调试模式或者是新版本时，才会加载路由表到内存中.
                 if (XRouter.debuggable() || PackageUtils.isNewVersion(context)) {
@@ -224,7 +224,7 @@ public class LogisticsCenter {
      */
     public static Postcard buildProvider(String serviceName) {
         RouteInfo info = Warehouse.providersIndex.get(serviceName);
-        if (null == info) {
+        if (info == null) {
             return null;
         } else {
             return new Postcard(info.getPath(), info.getGroup());
@@ -232,12 +232,12 @@ public class LogisticsCenter {
     }
 
     /**
-     * 通过存放在内存中的路由表信息组装postcard
+     * 通过存放在内存中的路由表信息组装postcard【加载路由表（将路由组IRouteGroup里的路由信息加入到路由表中）（初始化IProvider并加入到路由表中）】
      *
      * @param postcard Incomplete postcard, should complete by this method.
      */
     public synchronized static void completion(Postcard postcard) {
-        if (null == postcard) {
+        if (postcard == null) {
             throw new NoRouteFoundException(TAG + "No postcard!");
         }
 
