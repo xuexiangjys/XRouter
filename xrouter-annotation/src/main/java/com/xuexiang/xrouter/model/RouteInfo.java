@@ -17,8 +17,10 @@
 package com.xuexiang.xrouter.model;
 
 
+import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xrouter.annotation.Router;
 import com.xuexiang.xrouter.enums.RouteType;
+import com.xuexiang.xrouter.enums.TypeKind;
 
 import java.util.Map;
 
@@ -48,7 +50,7 @@ public class RouteInfo {
      */
     private String path;
     /**
-     * 路由所在的组
+     * 路由所在的组名
      */
     private String group;
     /**
@@ -99,7 +101,7 @@ public class RouteInfo {
     /**
      * Type
      *
-     * @param router       router
+     * @param router      router
      * @param destination destination
      * @param type        type
      */
@@ -108,27 +110,27 @@ public class RouteInfo {
     }
 
     /**
-     * Type
+     * 构建路由信息（RouterProcessor自动构造使用）
      *
-     * @param router      router
-     * @param rawType    rawType
-     * @param type       type
-     * @param paramsType paramsType
+     * @param router     路由的注解
+     * @param rawType    被标注路由的类
+     * @param type       路由的类型
+     * @param paramsType 被{@link AutoWired}标注字段的信息（key为字段名，value为字段的类型{@link TypeKind}
      */
     public RouteInfo(Router router, Element rawType, RouteType type, Map<String, Integer> paramsType) {
         this(type, rawType, null, router.path(), router.group(), paramsType, router.extras());
     }
 
     /**
-     * Type
+     * 构建路由信息
      *
-     * @param type        type
-     * @param rawType     rawType
-     * @param destination destination
-     * @param path        path
-     * @param group       group
-     * @param paramsType  paramsType
-     * @param extra       extra
+     * @param type        路由的类型
+     * @param rawType     被标注路由的类
+     * @param destination 路由目标类
+     * @param path        路由的路径
+     * @param group       路由所在的组
+     * @param paramsType  被{@link AutoWired}标注字段的信息（key为字段名，value为字段的类型{@link TypeKind}
+     * @param extra       路由的附加属性
      */
     public RouteInfo(RouteType type, Element rawType, Class<?> destination, String path, String group, Map<String, Integer> paramsType, int extra) {
         this.type = type;

@@ -43,7 +43,7 @@ import javax.lang.model.util.Types;
 
 import static com.xuexiang.xrouter.compiler.util.Consts.ANNOTATION_TYPE_AUTOWIRED;
 import static com.xuexiang.xrouter.compiler.util.Consts.ISYRINGE;
-import static com.xuexiang.xrouter.compiler.util.Consts.JSON_SERVICE;
+import static com.xuexiang.xrouter.compiler.util.Consts.SERIALIZATION_SERVICE;
 import static com.xuexiang.xrouter.compiler.util.Consts.KEY_MODULE_NAME;
 import static com.xuexiang.xrouter.compiler.util.Consts.METHOD_INJECT;
 import static com.xuexiang.xrouter.compiler.util.Consts.NAME_OF_AUTOWIRED;
@@ -51,29 +51,44 @@ import static com.xuexiang.xrouter.compiler.util.Consts.WARNING_TIPS;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**
- * Processor used to create autowired helper
+ * Process the annotation of {@link AutoWired}
+ *
+ * <p>自动生成依赖注入的辅助类 [ClassName]$$XRouter$$AutoWired </p>
+ *
  * @author xuexiang
- * @date 2018/4/2 上午12:07
+ * @since 2018/5/20 上午12:02
  */
 @AutoService(Processor.class)
 @SupportedOptions(KEY_MODULE_NAME)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes({ANNOTATION_TYPE_AUTOWIRED})
-public class AutowiredProcessor extends AbstractProcessor {
-    private Filer mFiler;       // File util, write class file into disk.
+public class AutoWiredProcessor extends AbstractProcessor {
+    /**
+     * 写class文件到disk
+     */
+    private Filer filer;
+    /**
+     * 日志打印工具
+     */
     private Logger logger;
+    /**
+     * 类型工具
+     */
     private Types types;
     private TypeUtils typeUtils;
+    /**
+     * 获取类的工具
+     */
     private Elements elements;
     private Map<TypeElement, List<Element>> parentAndChild = new HashMap<>();   // Contain field need autowired and his super class.
-    private static final ClassName ARouterClass = ClassName.get("com.alibaba.android.arouter.launcher", "ARouter");
-    private static final ClassName AndroidLog = ClassName.get("android.util", "Log");
+    private static final ClassName XRouterClassName = ClassName.get("com.xuexiang.xrouter.launcher", "XRouter");
+    private static final ClassName XRLogClassName = ClassName.get("com.xuexiang.xrouter.logs", "XRLog");
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
 
-        mFiler = processingEnv.getFiler();                  // Generate class.
+        filer = processingEnv.getFiler();                  // Generate class.
         types = processingEnv.getTypeUtils();            // Get type utils.
         elements = processingEnv.getElementUtils();      // Get class meta.
 
@@ -81,17 +96,15 @@ public class AutowiredProcessor extends AbstractProcessor {
 
         logger = new Logger(processingEnv.getMessager());   // Package the log utils.
 
-        logger.info(">>> AutowiredProcessor init. <<<");
+        logger.info(">>> AutoWiredProcessor init. <<<");
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         if (CollectionUtils.isNotEmpty(set)) {
+            Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(AutoWired.class);
             try {
-                logger.info(">>> Found autowired field, start... <<<");
-                categories(roundEnvironment.getElementsAnnotatedWith(AutoWired.class));
-                generateHelper();
-
+                parseAutoWireds(elements);
             } catch (Exception e) {
                 logger.error(e);
             }
@@ -101,69 +114,100 @@ public class AutowiredProcessor extends AbstractProcessor {
         return false;
     }
 
-    private void generateHelper() throws IOException, IllegalAccessException {
-        TypeElement type_ISyringe = elements.getTypeElement(ISYRINGE);
-        TypeElement type_JsonService = elements.getTypeElement(JSON_SERVICE);
-        TypeMirror iProvider = elements.getTypeElement(Consts.IPROVIDER).asType();
-        TypeMirror activityTm = elements.getTypeElement(Consts.ACTIVITY).asType();
-        TypeMirror fragmentTm = elements.getTypeElement(Consts.FRAGMENT).asType();
-        TypeMirror fragmentTmV4 = elements.getTypeElement(Consts.FRAGMENT_V4).asType();
+    /**
+     * 解析自动依赖注入的注解{@link AutoWired}
+     *
+     * @param elements 被@AutoWired修饰的字段
+     */
+    private void parseAutoWireds(Set<? extends Element> elements) throws IOException, IllegalAccessException {
+        logger.info(">>> Found AutoWired fields, start... <<<");
+        categories(elements); //对AutoWired字段按所在包装类的类名进行分类
+        generateInjectCode(); //生成对应的依赖注入代码
+    }
 
-        // Build input param name.
+    /**
+     * 生成依赖注入的代码
+     *
+     * @throws IOException
+     * @throws IllegalAccessException
+     */
+    private void generateInjectCode() throws IOException, IllegalAccessException {
+        TypeElement type_ISyringe = elements.getTypeElement(ISYRINGE);
+        TypeMirror type_SerializationService = elements.getTypeElement(SERIALIZATION_SERVICE).asType();
+        TypeMirror type_IProvider = elements.getTypeElement(Consts.IPROVIDER).asType();
+        TypeMirror type_Activity = elements.getTypeElement(Consts.ACTIVITY).asType();
+        TypeMirror type_Fragment = elements.getTypeElement(Consts.FRAGMENT).asType();
+        TypeMirror type_Fragment_V4 = elements.getTypeElement(Consts.FRAGMENT_V4).asType();
+
+        /* Build input param name.
+            Object target
+        */
         ParameterSpec objectParamSpec = ParameterSpec.builder(TypeName.OBJECT, "target").build();
 
         if (MapUtils.isNotEmpty(parentAndChild)) {
             for (Map.Entry<TypeElement, List<Element>> entry : parentAndChild.entrySet()) {
-                // Build method : 'inject'
-                MethodSpec.Builder injectMethodBuilder = MethodSpec.methodBuilder(METHOD_INJECT)
-                        .addAnnotation(Override.class)
-                        .addModifiers(PUBLIC)
-                        .addParameter(objectParamSpec);
 
-                TypeElement parent = entry.getKey();
+                TypeElement parent = entry.getKey();  //封装字段的最里层类
                 List<Element> childs = entry.getValue();
 
+                //获得包名和文件名
                 String qualifiedName = parent.getQualifiedName().toString();
                 String packageName = qualifiedName.substring(0, qualifiedName.lastIndexOf("."));
                 String fileName = parent.getSimpleName() + NAME_OF_AUTOWIRED;
 
                 logger.info(">>> Start process " + childs.size() + " field in " + parent.getSimpleName() + " ... <<<");
 
-                TypeSpec.Builder helper = TypeSpec.classBuilder(fileName)
+                //构建自动依赖注入代码的文件
+                TypeSpec.Builder injectHelper = TypeSpec.classBuilder(fileName)
                         .addJavadoc(WARNING_TIPS)
                         .addSuperinterface(ClassName.get(type_ISyringe))
                         .addModifiers(PUBLIC);
 
-                FieldSpec jsonServiceField = FieldSpec.builder(TypeName.get(type_JsonService.asType()), "serializationService", Modifier.PRIVATE).build();
-                helper.addField(jsonServiceField);
+                /*
+                    private SerializationService serializationService;
+                 */
+                FieldSpec serializationServiceField = FieldSpec.builder(TypeName.get(type_SerializationService), "serializationService", Modifier.PRIVATE).build();
+                injectHelper.addField(serializationServiceField);
 
-                injectMethodBuilder.addStatement("serializationService = $T.getInstance().navigation($T.class)", ARouterClass, ClassName.get(type_JsonService));
-                injectMethodBuilder.addStatement("$T substitute = ($T)target", ClassName.get(parent), ClassName.get(parent));
+                /*
+                    Build method : 'inject'
+                    @Override
+                    public void inject(Object target) {
+                        serializationService = XRouter.getInstance().navigation(SerializationService.class);
+                        T substitute = (T)target;
+                    }
+                 */
+                MethodSpec.Builder injectMethodBuilder = MethodSpec.methodBuilder(METHOD_INJECT)
+                        .addAnnotation(Override.class)
+                        .addModifiers(PUBLIC)
+                        .addParameter(objectParamSpec)
+                        .addStatement("serializationService = $T.getInstance().navigation($T.class)", XRouterClassName, ClassName.get(type_SerializationService))
+                        .addStatement("$T substitute = ($T)target", ClassName.get(parent), ClassName.get(parent));
 
-                // Generate method body, start inject.
+                // 生成依赖注入方法的主体, 开始实现依赖注入的方法.
                 for (Element element : childs) {
                     AutoWired fieldConfig = element.getAnnotation(AutoWired.class);
                     String fieldName = element.getSimpleName().toString();
-                    if (types.isSubtype(element.asType(), iProvider)) {  // It's provider
-                        if ("".equals(fieldConfig.name())) {    // User has not set service path, then use byType.
-
+                    // It's provider
+                    if (types.isSubtype(element.asType(), type_IProvider)) {
+                        if (StringUtils.isEmpty(fieldConfig.name())) {    // 没有设置服务provider的路径，直接使用类名寻找
                             // Getter
                             injectMethodBuilder.addStatement(
                                     "substitute." + fieldName + " = $T.getInstance().navigation($T.class)",
-                                    ARouterClass,
+                                    XRouterClassName,
                                     ClassName.get(element.asType())
                             );
-                        } else {    // use byName
+                        } else {     // 设置类服务provider的路径，使用路径寻找
                             // Getter
                             injectMethodBuilder.addStatement(
                                     "substitute." + fieldName + " = ($T)$T.getInstance().build($S).navigation();",
                                     ClassName.get(element.asType()),
-                                    ARouterClass,
+                                    XRouterClassName,
                                     fieldConfig.name()
                             );
                         }
 
-                        // Validater
+                        // 增加校验"字段是否为NULL"的判断代码
                         if (fieldConfig.required()) {
                             injectMethodBuilder.beginControlFlow("if (substitute." + fieldName + " == null)");
                             injectMethodBuilder.addStatement(
@@ -174,45 +218,54 @@ public class AutowiredProcessor extends AbstractProcessor {
                         String originalValue = "substitute." + fieldName;
                         String statement = "substitute." + fieldName + " = substitute.";
                         boolean isActivity = false;
-                        if (types.isSubtype(parent.asType(), activityTm)) {  // Activity, then use getIntent()
+
+                        // Activity, then use getIntent()
+                        if (types.isSubtype(parent.asType(), type_Activity)) {
                             isActivity = true;
                             statement += "getIntent().";
-                        } else if (types.isSubtype(parent.asType(), fragmentTm) || types.isSubtype(parent.asType(), fragmentTmV4)) {   // Fragment, then use getArguments()
+
+                            // Fragment, then use getArguments()
+                        } else if (types.isSubtype(parent.asType(), type_Fragment)
+                                || types.isSubtype(parent.asType(), type_Fragment_V4)) {
                             statement += "getArguments().";
                         } else {
                             throw new IllegalAccessException("The field [" + fieldName + "] need autowired from intent, its parent must be activity or fragment!");
                         }
 
                         statement = buildStatement(originalValue, statement, typeUtils.typeExchange(element), isActivity);
-                        if (statement.startsWith("serializationService.")) {   // Not mortals
-                            injectMethodBuilder.beginControlFlow("if (null != serializationService)");
+
+                        if (statement.startsWith("serializationService.")) {   // 如果参数是Object，需要反序列化
+                            injectMethodBuilder.beginControlFlow("if (serializationService != null)");
                             injectMethodBuilder.addStatement(
                                     "substitute." + fieldName + " = " + statement,
-                                    (StringUtils.isEmpty(fieldConfig.name()) ? fieldName : fieldConfig.name()),
+                                    StringUtils.isEmpty(fieldConfig.name()) ? fieldName : fieldConfig.name(),
                                     ClassName.get(element.asType())
                             );
                             injectMethodBuilder.nextControlFlow("else");
                             injectMethodBuilder.addStatement(
-                                    "$T.e(\"" + Consts.TAG + "\", \"You want automatic inject the field '" + fieldName + "' in class '$T' , then you should implement 'SerializationService' to support object auto inject!\")", AndroidLog, ClassName.get(parent));
+                                    "$T.e(\"" + Consts.TAG + "\", \"You want automatic inject the field '" + fieldName + "' in class '$T' , then you should implement 'SerializationService' to support object auto inject!\")", XRLogClassName, ClassName.get(parent));
                             injectMethodBuilder.endControlFlow();
                         } else {
-                            injectMethodBuilder.addStatement(statement, StringUtils.isEmpty(fieldConfig.name()) ? fieldName : fieldConfig.name());
+                            injectMethodBuilder.addStatement(statement,
+                                    StringUtils.isEmpty(fieldConfig.name()) ? fieldName : fieldConfig.name()
+                            );
                         }
 
-                        // Validator
+                        // 增加校验"字段是否为NULL"的判断代码
                         if (fieldConfig.required() && !element.asType().getKind().isPrimitive()) {  // Primitive wont be check.
                             injectMethodBuilder.beginControlFlow("if (null == substitute." + fieldName + ")");
                             injectMethodBuilder.addStatement(
-                                    "$T.e(\"" + Consts.TAG + "\", \"The field '" + fieldName + "' is null, in class '\" + $T.class.getName() + \"!\")", AndroidLog, ClassName.get(parent));
+                                    "$T.e(\"" + Consts.TAG + "\", \"The field '" + fieldName + "' is null, in class '\" + $T.class.getName() + \"!\")", XRLogClassName, ClassName.get(parent));
                             injectMethodBuilder.endControlFlow();
                         }
                     }
                 }
 
-                helper.addMethod(injectMethodBuilder.build());
+                //添加依赖注入的方法
+                injectHelper.addMethod(injectMethodBuilder.build());
 
-                // Generate autowire helper
-                JavaFile.builder(packageName, helper.build()).build().writeTo(mFiler);
+                // 生成自动依赖注入的类文件[ClassName]$$XRouter$$AutoWired
+                JavaFile.builder(packageName, injectHelper.build()).build().writeTo(filer);
 
                 logger.info(">>> " + parent.getSimpleName() + " has been processed, " + fileName + " has been generated. <<<");
             }
@@ -221,6 +274,15 @@ public class AutowiredProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * 构建普通字段赋值[intent]的表达式
+     *
+     * @param originalValue 默认值
+     * @param statement     表达式
+     * @param type          值的类型
+     * @param isActivity    是否是activity
+     * @return
+     */
     private String buildStatement(String originalValue, String statement, int type, boolean isActivity) {
         if (type == TypeKind.BOOLEAN.ordinal()) {
             statement += (isActivity ? ("getBooleanExtra($S, " + originalValue + ")") : ("getBoolean($S)"));
@@ -232,7 +294,7 @@ public class AutowiredProcessor extends AbstractProcessor {
             statement += (isActivity ? ("getIntExtra($S, " + originalValue + ")") : ("getInt($S)"));
         } else if (type == TypeKind.LONG.ordinal()) {
             statement += (isActivity ? ("getLongExtra($S, " + originalValue + ")") : ("getLong($S)"));
-        }else if(type == TypeKind.CHAR.ordinal()){
+        } else if (type == TypeKind.CHAR.ordinal()) {
             statement += (isActivity ? ("getCharExtra($S, " + originalValue + ")") : ("getChar($S)"));
         } else if (type == TypeKind.FLOAT.ordinal()) {
             statement += (isActivity ? ("getFloatExtra($S, " + originalValue + ")") : ("getFloat($S)"));
@@ -243,20 +305,20 @@ public class AutowiredProcessor extends AbstractProcessor {
         } else if (type == TypeKind.PARCELABLE.ordinal()) {
             statement += (isActivity ? ("getParcelableExtra($S)") : ("getParcelable($S)"));
         } else if (type == TypeKind.OBJECT.ordinal()) {
-            statement = "serializationService.parseObject(substitute." + (isActivity ? "getIntent()." : "getArguments().") + (isActivity ? "getStringExtra($S)" : "getString($S)") + ", new com.alibaba.android.arouter.facade.model.TypeWrapper<$T>(){}.getType())";
+            statement = "serializationService.parseObject(substitute." + (isActivity ? "getIntent()." : "getArguments().") + (isActivity ? "getStringExtra($S)" : "getString($S)") + ", new com.xuexiang.xrouter.model.TypeWrapper<$T>(){}.getType())";
         }
-
         return statement;
     }
 
     /**
-     * Categories field, find his papa.
+     * 分类字段，寻找他们所在的类（按父类进行分类）
      *
-     * @param elements Field need autowired
+     * @param elements 被@AutoWired修饰的字段
      */
     private void categories(Set<? extends Element> elements) throws IllegalAccessException {
         if (CollectionUtils.isNotEmpty(elements)) {
             for (Element element : elements) {
+                //getEnclosingElement--返回封装此元素的最里层元素, 即该字段所在的类。这里一般是Activity/Fragment。
                 TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
                 if (element.getModifiers().contains(Modifier.PRIVATE)) {
@@ -272,7 +334,6 @@ public class AutowiredProcessor extends AbstractProcessor {
                     parentAndChild.put(enclosingElement, childs);
                 }
             }
-
             logger.info("categories finished.");
         }
     }

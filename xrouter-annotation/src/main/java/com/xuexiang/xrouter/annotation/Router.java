@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
 public @interface Router {
 
     /**
-     * 路由的路径
+     * 路由的路径，必填
      */
     String path();
 

@@ -7,8 +7,9 @@ import javax.tools.Diagnostic;
 
 /**
  * 日志记录
+ *
  * @author xuexiang
- * @date 2018/4/2 上午12:06
+ * @since 2018/5/20 上午12:11
  */
 public class Logger {
     private Messager msg;

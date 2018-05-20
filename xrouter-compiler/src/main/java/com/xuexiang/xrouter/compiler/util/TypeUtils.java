@@ -19,15 +19,16 @@ import static com.xuexiang.xrouter.compiler.util.Consts.SHORT;
 import static com.xuexiang.xrouter.compiler.util.Consts.STRING;
 
 /**
- * Utils for type exchange
+ *
+ *
  * @author xuexiang
- * @date 2018/4/2 上午12:06
+ * @since 2018/5/20 上午12:11
  */
 public class TypeUtils {
 
     private Types types;
     private Elements elements;
-    private TypeMirror parcelableType;
+    private TypeMirror parcelableType;    //PARCELABLE类型
 
     public TypeUtils(Types types, Elements elements) {
         this.types = types;

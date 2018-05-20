@@ -16,8 +16,10 @@
 
 package com.xuexiang.xrouter.enums;
 
+import com.xuexiang.xrouter.annotation.AutoWired;
+
 /**
- * 字段的类型[Intent]
+ * 被{@link AutoWired}标注的字段的类型
  *
  * @author xuexiang
  * @since 2018/5/17 上午12:32

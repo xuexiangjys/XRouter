@@ -31,13 +31,18 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface AutoWired {
 
-    // Mark param's name or service name.
+    /**
+     * @return 参数的字段名／服务名, 默认是字段的参数名
+     */
     String name() default "";
 
-    // If required, app will be crash when value is null.
-    // Primitive type wont be check!
+    /**
+     * @return 是否是非空字段，If required, app will be crash when value is null.
+     */
     boolean required() default false;
 
-    // Description of the field
+    /**
+     * @return 字段的描述
+     */
     String desc() default "No desc.";
 }
