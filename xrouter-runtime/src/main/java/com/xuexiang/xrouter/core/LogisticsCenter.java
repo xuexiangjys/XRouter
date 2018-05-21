@@ -73,8 +73,8 @@ public class LogisticsCenter {
         registerByPlugin = false;
         //auto generate register code by gradle plugin: xrouter-plugin
         // looks like below:
-        // registerRouteRoot(new ARouter..Root..modulejava());
-        // registerRouteRoot(new ARouter..Root..modulekotlin());
+        // register(new XRouter..Root..modulejava());
+        // register(new XRouter..Root..modulekotlin());
     }
 
     /**

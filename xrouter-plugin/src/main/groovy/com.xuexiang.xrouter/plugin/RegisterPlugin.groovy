@@ -18,6 +18,7 @@ package com.xuexiang.xrouter.plugin
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
+import com.xuexiang.xrouter.core.RegisterTransform
 import com.xuexiang.xrouter.util.ScanSetting
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -42,7 +43,7 @@ public class RegisterPlugin implements Plugin<Project> {
             def android = project.extensions.getByType(AppExtension)
             def transformImpl = new RegisterTransform(project)
 
-            //init xrouter-auto-register settings
+            //初始化 xrouter-plugin 扫描设置
             ArrayList<ScanSetting> list = new ArrayList<>(3)
             list.add(new ScanSetting('IRouteRoot'))   //扫描根路由
             list.add(new ScanSetting('IInterceptorGroup')) //扫描拦截器组

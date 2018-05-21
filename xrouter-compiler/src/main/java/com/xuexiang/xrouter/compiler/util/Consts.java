@@ -2,8 +2,9 @@ package com.xuexiang.xrouter.compiler.util;
 
 /**
  * 常量
+ *
  * @author xuexiang
- * @date 2018/4/2 上午12:04
+ * @since 2018/5/21 下午6:17
  */
 public class Consts {
     // Generate

@@ -19,7 +19,7 @@ import static com.xuexiang.xrouter.compiler.util.Consts.SHORT;
 import static com.xuexiang.xrouter.compiler.util.Consts.STRING;
 
 /**
- *
+ * 获取真实的java类型工具
  *
  * @author xuexiang
  * @since 2018/5/20 上午12:11
@@ -38,7 +38,7 @@ public class TypeUtils {
     }
 
     /**
-     * Diagnostics out the true java type
+     * 计算出真实的java类型工具
      *
      * @param element Raw type
      * @return Type class of java
