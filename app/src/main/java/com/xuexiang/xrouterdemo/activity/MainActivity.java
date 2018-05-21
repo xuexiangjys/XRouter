@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter.activity;
+package com.xuexiang.xrouterdemo.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.xuexiang.xrouter.R;
+import com.xuexiang.xpage.base.BaseActivity;
 import com.xuexiang.xrouter.annotation.Router;
+import com.xuexiang.xrouterdemo.fragment.MainFragment;
 
 @Router(path = "/main/main")
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        openPage(MainFragment.class);
     }
 }

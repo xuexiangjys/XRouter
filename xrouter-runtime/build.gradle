@@ -24,6 +24,12 @@ android {
         targetSdkVersion build_versions.target_sdk
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
 
     lintOptions {
@@ -38,6 +44,8 @@ dependencies {
     testImplementation deps.junit
     androidTestImplementation deps.runner
     androidTestImplementation deps.espresso.core
+
+    annotationProcessor project(':xrouter-compiler')
     api project(':xrouter-annotation')
 }
 

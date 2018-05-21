@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouter;
+package com.xuexiang.xrouterdemo;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.xuexiang.xpage.AppPageConfig;
+import com.xuexiang.xpage.PageConfig;
+import com.xuexiang.xpage.PageConfiguration;
+import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xrouter.launcher.XRouter;
+import com.xuexiang.xutil.XUtil;
+
+import java.util.List;
 
 /**
  * @author xuexiang
@@ -29,7 +37,24 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        XUtil.init(this);
 
+        initXRouter();
+
+        initXPage();
+        
+    }
+
+    private void initXPage() {
+        PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
+            @Override
+            public List<PageInfo> registerPages(Context context) {
+                return AppPageConfig.getInstance().getPages();
+            }
+        }).debug("PageLog").enableWatcher(false).init(this);
+    }
+
+    private void initXRouter() {
         if (isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             XRouter.openLog();     // 打印日志
             XRouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)

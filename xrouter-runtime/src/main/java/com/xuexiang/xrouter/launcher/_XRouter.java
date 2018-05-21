@@ -245,7 +245,7 @@ final class _XRouter {
             LogisticsCenter.completion(postcard);
             return (T) postcard.getProvider();
         } catch (NoRouteFoundException ex) {
-            XRLog.e(ex);
+            XRLog.w(ex.getMessage());
             return null;
         }
     }
@@ -265,9 +265,11 @@ final class _XRouter {
             XRLog.e(ex);
 
             if (debuggable()) { // Show friendly tips for user.
-                Toast.makeText(mContext, "There's no route matched!\n" +
+                String tips = "There's no route matched!\n" +
                         " Path = [" + postcard.getPath() + "]\n" +
-                        " Group = [" + postcard.getGroup() + "]", Toast.LENGTH_LONG).show();
+                        " Group = [" + postcard.getGroup() + "]";
+                Toast.makeText(mContext, tips, Toast.LENGTH_LONG).show();
+                XRLog.i(tips);
             }
 
             if (callback != null) {

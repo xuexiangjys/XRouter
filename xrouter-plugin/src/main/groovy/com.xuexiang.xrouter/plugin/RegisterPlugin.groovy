@@ -20,6 +20,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.xuexiang.xrouter.core.RegisterTransform
 import com.xuexiang.xrouter.util.ScanSetting
+import com.xuexiang.xrouter.util.Logger
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
