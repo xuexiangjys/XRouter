@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-apply plugin: 'groovy'
+package com.xuexiang.xrouter.activity;
 
-targetCompatibility = JavaVersion.VERSION_1_7
-sourceCompatibility = JavaVersion.VERSION_1_7
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-dependencies {
-    implementation gradleApi()//gradle sdk
-    implementation localGroovy()//groovy sdk
-    implementation deps.android_gradle_plugin
+import com.xuexiang.xrouter.R;
+import com.xuexiang.xrouter.annotation.Router;
+
+@Router(path = "/main/main")
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
 }
-
-//apply from: "https://raw.githubusercontent.com/xuexiangjys/XUtil/master/JitPackUpload.gradle"
-apply from: "https://raw.githubusercontent.com/xuexiangjys/XUtil/master/localRepositoryUpload.gradle"

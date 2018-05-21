@@ -79,8 +79,8 @@ public class RouteInfo {
      * @param extra       extra
      * @return this
      */
-    public static RouteInfo build(RouteType type, Class<?> destination, String path, String group, int extra) {
-        return new RouteInfo(type, null, destination, path, group, null, extra);
+    public static RouteInfo build(RouteType type, Class<?> destination, String path, String group, int priority, int extra) {
+        return new RouteInfo(type, null, destination, path, group, null, priority, extra);
     }
 
     /**
@@ -91,11 +91,12 @@ public class RouteInfo {
      * @param path        path
      * @param group       group
      * @param paramsType  paramsType
+     * @param priority    priority
      * @param extra       extra
      * @return this
      */
-    public static RouteInfo build(RouteType type, Class<?> destination, String path, String group, Map<String, Integer> paramsType, int extra) {
-        return new RouteInfo(type, null, destination, path, group, paramsType, extra);
+    public static RouteInfo build(RouteType type, Class<?> destination, String path, String group, Map<String, Integer> paramsType, int priority, int extra) {
+        return new RouteInfo(type, null, destination, path, group, paramsType, priority, extra);
     }
 
     /**
@@ -106,7 +107,7 @@ public class RouteInfo {
      * @param type        type
      */
     public RouteInfo(Router router, Class<?> destination, RouteType type) {
-        this(type, null, destination, router.path(), router.group(), null, router.extras());
+        this(type, null, destination, router.path(), router.group(), null, router.priority(), router.extras());
     }
 
     /**
@@ -118,7 +119,7 @@ public class RouteInfo {
      * @param paramsType 被{@link AutoWired}标注字段的信息（key为字段名，value为字段的类型{@link TypeKind}
      */
     public RouteInfo(Router router, Element rawType, RouteType type, Map<String, Integer> paramsType) {
-        this(type, rawType, null, router.path(), router.group(), paramsType, router.extras());
+        this(type, rawType, null, router.path(), router.group(), paramsType, router.priority(), router.extras());
     }
 
     /**
@@ -130,15 +131,17 @@ public class RouteInfo {
      * @param path        路由的路径
      * @param group       路由所在的组
      * @param paramsType  被{@link AutoWired}标注字段的信息（key为字段名，value为字段的类型{@link TypeKind}
+     * @param priority    优先级
      * @param extra       路由的附加属性
      */
-    public RouteInfo(RouteType type, Element rawType, Class<?> destination, String path, String group, Map<String, Integer> paramsType, int extra) {
+    public RouteInfo(RouteType type, Element rawType, Class<?> destination, String path, String group, Map<String, Integer> paramsType, int priority, int extra) {
         this.type = type;
         this.destination = destination;
         this.rawType = rawType;
         this.path = path;
         this.group = group;
         this.paramsType = paramsType;
+        this.priority = priority;
         this.extra = extra;
     }
 
