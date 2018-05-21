@@ -26,6 +26,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
 import com.xuexiang.xrouter.facade.callback.NavigationCallback;
@@ -224,6 +225,26 @@ public final class Postcard extends RouteInfo {
      */
     public void navigation(Activity context, int requestCode, NavigationCallback callback) {
         XRouter.getInstance().navigation(context, this, requestCode, callback);
+    }
+
+    /**
+     * 路由导航（startActivityForResult）
+     *
+     * @param fragment     fragment
+     * @param requestCode startActivityForResult's param
+     */
+    public void navigation(Fragment fragment, int requestCode) {
+        navigation(fragment, requestCode, null);
+    }
+
+    /**
+     * 路由导航（startActivityForResult）
+     *
+     * @param fragment    fragment
+     * @param requestCode startActivityForResult's param
+     */
+    public void navigation(Fragment fragment, int requestCode, NavigationCallback callback) {
+        XRouter.getInstance().navigation(fragment, this, requestCode, callback);
     }
 
     /**

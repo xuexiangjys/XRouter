@@ -31,12 +31,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface Interceptor {
     /**
-     * 拦截器的优先级, XRouter将按优先级高低依次执行拦截.
+     * @return 拦截器的优先级, XRouter将按优先级高低依次执行拦截.
      */
     int priority();
 
     /**
-     * 拦截器的名称
+     * @return 拦截器的名称
      */
     String name() default "Default";
 }

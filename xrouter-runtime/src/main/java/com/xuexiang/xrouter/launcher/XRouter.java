@@ -19,6 +19,7 @@ package com.xuexiang.xrouter.launcher;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 
 import com.xuexiang.xrouter.exception.InitException;
 import com.xuexiang.xrouter.facade.Postcard;
@@ -191,5 +192,17 @@ public final class XRouter {
      */
     public Object navigation(Context context, Postcard postcard, int requestCode, NavigationCallback callback) {
         return _XRouter.getInstance().navigation(context, postcard, requestCode, callback);
+    }
+
+    /**
+     * 启动路由导航
+     *
+     * @param fragment
+     * @param postcard
+     * @param requestCode Set for startActivityForResult
+     * @param callback    路由导航回调
+     */
+    public Object navigation(Fragment fragment, Postcard postcard, int requestCode, NavigationCallback callback) {
+        return _XRouter.getInstance().navigation(fragment, postcard, requestCode, callback);
     }
 }

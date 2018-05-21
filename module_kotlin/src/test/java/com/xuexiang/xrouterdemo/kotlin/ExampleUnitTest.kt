@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouterdemo.activity;
+package com.xuexiang.xrouterdemo.kotlin
 
-import android.os.Bundle;
+import org.junit.Test
 
-import com.xuexiang.xpage.base.BaseActivity;
-import com.xuexiang.xrouter.annotation.Router;
-import com.xuexiang.xrouterdemo.fragment.MainFragment;
+import org.junit.Assert.*
 
-@Router(path = "/main/main")
-public class MainActivity extends BaseActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        openPage(MainFragment.class);
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
     }
-
 }

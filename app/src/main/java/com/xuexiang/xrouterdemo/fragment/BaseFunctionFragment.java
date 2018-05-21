@@ -16,9 +16,12 @@
 
 package com.xuexiang.xrouterdemo.fragment;
 
+import android.content.Intent;
+
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.SimpleListFragment;
 import com.xuexiang.xrouter.launcher.XRouter;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.List;
 
@@ -58,10 +61,16 @@ public class BaseFunctionFragment extends SimpleListFragment {
                 XRouter.getInstance().build("/test/activity2").navigation();
                 break;
             case 1:  //跳转到kotlin页面
-
+                XRouter.getInstance()
+                        .build("/kotlin/test")
+                        .withString("name", "xuexiang")
+                        .withInt("age", 24)
+                        .navigation();
                 break;
             case 2:  //跳转ForResult
-
+                XRouter.getInstance()
+                        .build("/test/activity2")
+                        .navigation(this, 666);
                 break;
             case 3:  //获取Fragment实例
 
@@ -79,4 +88,11 @@ public class BaseFunctionFragment extends SimpleListFragment {
                 break;
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ToastUtils.toast("onActivityResult， requestCode：" + requestCode);
+    }
+
 }

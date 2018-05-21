@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/XRouter.iml" filepath="$PROJECT_DIR$/XRouter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_kotlin/module_kotlin.iml" filepath="$PROJECT_DIR$/module_kotlin/module_kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrouter-annotation/xrouter-annotation.iml" filepath="$PROJECT_DIR$/xrouter-annotation/xrouter-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrouter-compiler/xrouter-compiler.iml" filepath="$PROJECT_DIR$/xrouter-compiler/xrouter-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrouter-plugin/xrouter-plugin.iml" filepath="$PROJECT_DIR$/xrouter-plugin/xrouter-plugin.iml" />

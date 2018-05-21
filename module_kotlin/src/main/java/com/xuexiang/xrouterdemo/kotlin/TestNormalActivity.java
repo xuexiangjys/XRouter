@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouterdemo.activity;
+package com.xuexiang.xrouterdemo.kotlin;
 
 import android.os.Bundle;
-
-import com.xuexiang.xpage.base.BaseActivity;
+import android.support.v7.app.AppCompatActivity;
 import com.xuexiang.xrouter.annotation.Router;
-import com.xuexiang.xrouterdemo.fragment.MainFragment;
 
-@Router(path = "/main/main")
-public class MainActivity extends BaseActivity {
+@Router(path = "/kotlin/java")
+public class TestNormalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        openPage(MainFragment.class);
+        setContentView(R.layout.activity_test_normal);
     }
-
 }

@@ -2,11 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.xuexiang.xrouter'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
     defaultConfig {
         applicationId "com.xuexiang.xrouter"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion build_versions.target_sdk
+
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,10 +40,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation deps.support.app_compat
     testImplementation deps.junit
     androidTestImplementation deps.runner
     androidTestImplementation deps.espresso.core
+
+    implementation project(':module_kotlin')
+
 
     implementation project(':xrouter-runtime')
     annotationProcessor project(':xrouter-compiler')

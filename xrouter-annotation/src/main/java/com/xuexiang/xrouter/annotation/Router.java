@@ -32,28 +32,28 @@ import java.lang.annotation.Target;
 public @interface Router {
 
     /**
-     * 路由的路径，必填
+     * @return 路由的路径，必填
      */
     String path();
 
     /**
-     * 路由所在的组
+     * @return 路由所在的组
      */
     String group() default "";
 
     /**
-     * 路由的名称
+     * @return 路由的名称
      */
     String name() default "undefined";
     
     /**
-     * 路由的拓展属性，这个属性是一个int值，换句话说，单个int有4字节，也就是32位，可以配置32个开关。
+     * @return 路由的拓展属性，这个属性是一个int值，换句话说，单个int有4字节，也就是32位，可以配置32个开关。
      * Ps. U should use the integer num sign the switch, by bits. 10001010101010
      */
     int extras() default Integer.MIN_VALUE;
 
     /**
-     * 路由的优先级
+     * @return 路由的优先级
      */
     int priority() default -1;
 
