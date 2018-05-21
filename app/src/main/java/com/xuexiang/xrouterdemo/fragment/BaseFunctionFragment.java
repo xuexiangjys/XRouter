@@ -17,10 +17,16 @@
 package com.xuexiang.xrouterdemo.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.SimpleListFragment;
 import com.xuexiang.xrouter.launcher.XRouter;
+import com.xuexiang.xrouterdemo.R;
 import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.List;
@@ -73,16 +79,33 @@ public class BaseFunctionFragment extends SimpleListFragment {
                         .navigation(this, 666);
                 break;
             case 3:  //获取Fragment实例
-
+                Fragment fragment = (Fragment) XRouter.getInstance().build("/test/fragment").navigation();
+                ToastUtils.toast("找到Fragment:" + fragment.toString());
                 break;
             case 4:  //携带参数的应用内跳转
-
+                Uri testUriMix = Uri.parse("xrouter://xuexiangjys.github.io/test/activity2");
+                XRouter.getInstance().build(testUriMix)
+                        .withString("key1", "value1")
+                        .navigation();
                 break;
             case 5:  //旧版本转场动画
-
+                XRouter.getInstance()
+                        .build("/test/activity2")
+                        .withTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom)
+                        .navigation(getActivity());
                 break;
             case 6:  //新版本转场动画
+                if (Build.VERSION.SDK_INT >= 16) {
+                    ActivityOptionsCompat compat = ActivityOptionsCompat.
+                            makeScaleUpAnimation(getListView(), getListView().getWidth() / 2, getListView().getHeight() / 2, 0, 0);
 
+                    XRouter.getInstance()
+                            .build("/test/activity2")
+                            .withOptionsCompat(compat)
+                            .navigation();
+                } else {
+                    ToastUtils.toast("API < 16,不支持新版本动画");
+                }
                 break;
             default:
                 break;

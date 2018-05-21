@@ -14,34 +14,29 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouterdemo.activity.test;
+package com.xuexiang.xrouterdemo.activity;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.xuexiang.xrouter.annotation.AutoWired;
-import com.xuexiang.xrouter.annotation.Router;
-import com.xuexiang.xrouterdemo.R;
-import com.xuexiang.xutil.tip.ToastUtils;
+import com.xuexiang.xrouter.facade.Postcard;
+import com.xuexiang.xrouter.facade.callback.NavCallback;
+import com.xuexiang.xrouter.launcher.XRouter;
 
-@Router(path = "/test/activity2")
-public class Test2Activity extends AppCompatActivity {
-
-    @AutoWired
-    String key1;
+public class SchemeFilterActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test2);
 
-        String value = getIntent().getStringExtra("key1");
-        if (!TextUtils.isEmpty(value)) {
-            ToastUtils.toast("exist param :" + value);
-        }
-
-        setResult(999);
+//        直接通过ARouter处理外部Uri
+        Uri uri = getIntent().getData();
+        XRouter.getInstance().build(uri).navigation(this, new NavCallback() {
+            @Override
+            public void onArrival(Postcard postcard) {
+                finish();
+            }
+        });
     }
 }

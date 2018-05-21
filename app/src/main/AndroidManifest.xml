@@ -18,6 +18,36 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.SchemeFilterActivity">
+
+            <!-- Scheme -->
+            <intent-filter>
+                <data
+                    android:host="xuexiangjys.github.io"
+                    android:scheme="xrouter"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+
+            <!-- App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="xuexiangjys.github.io"
+                    android:scheme="http"/>
+                <data
+                    android:host="xuexiangjys.github.io"
+                    android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activity.test.Test1Activity"/>
         <activity android:name=".activity.test.Test2Activity"/>
         <activity android:name=".activity.test.Test3Activity"/>
