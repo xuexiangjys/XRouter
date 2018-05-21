@@ -243,7 +243,7 @@ public class AutoWiredProcessor extends AbstractProcessor {
                             );
                             injectMethodBuilder.nextControlFlow("else");
                             injectMethodBuilder.addStatement(
-                                    "$T.e(\"" + Consts.TAG + "\", \"You want automatic inject the field '" + fieldName + "' in class '$T' , then you should implement 'SerializationService' to support object auto inject!\")", XRLogClassName, ClassName.get(parent));
+                                    "$T.e(\"You want automatic inject the field '" + fieldName + "' in class '$T' , then you should implement 'SerializationService' to support object auto inject!\")", XRLogClassName, ClassName.get(parent));
                             injectMethodBuilder.endControlFlow();
                         } else {
                             injectMethodBuilder.addStatement(statement,
@@ -255,7 +255,7 @@ public class AutoWiredProcessor extends AbstractProcessor {
                         if (fieldConfig.required() && !element.asType().getKind().isPrimitive()) {  // Primitive wont be check.
                             injectMethodBuilder.beginControlFlow("if (null == substitute." + fieldName + ")");
                             injectMethodBuilder.addStatement(
-                                    "$T.e(\"" + Consts.TAG + "\", \"The field '" + fieldName + "' is null, in class '\" + $T.class.getName() + \"!\")", XRLogClassName, ClassName.get(parent));
+                                    "$T.e(\"The field '" + fieldName + "' is null, in class '\" + $T.class.getName() + \"!\")", XRLogClassName, ClassName.get(parent));
                             injectMethodBuilder.endControlFlow();
                         }
                     }

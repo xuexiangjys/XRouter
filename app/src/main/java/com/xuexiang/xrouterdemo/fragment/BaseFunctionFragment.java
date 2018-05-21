@@ -24,10 +24,10 @@ import java.util.List;
 
 /**
  * @author xuexiang
- * @since 2018/5/21 下午11:39
+ * @since 2018/5/22 上午12:45
  */
-@Page(name = "基础设置")
-public class BaseSettingFragment extends SimpleListFragment {
+@Page(name = "基础功能（请先初始化)")
+public class BaseFunctionFragment extends SimpleListFragment {
     /**
      * 初始化例子
      *
@@ -36,10 +36,13 @@ public class BaseSettingFragment extends SimpleListFragment {
      */
     @Override
     protected List<String> initSimpleData(List<String> lists) {
-        lists.add("打开日志");
-        lists.add("开启调试模式(InstantRun需要开启)");
-        lists.add("初始化XRouter");
-        lists.add("关闭XRouter");
+        lists.add("简单的应用内跳转");
+        lists.add("跳转到kotlin页面");
+        lists.add("跳转ForResult");
+        lists.add("获取Fragment实例");
+        lists.add("携带参数的应用内跳转");
+        lists.add("旧版本转场动画");
+        lists.add("新版本转场动画");
         return lists;
     }
 
@@ -51,23 +54,26 @@ public class BaseSettingFragment extends SimpleListFragment {
     @Override
     protected void onItemClick(int position) {
         switch(position) {
-            case 0:  //打开日志
-                XRouter.openLog();
+            case 0:  //简单的应用内跳转
+                XRouter.getInstance().build("/test/activity2").navigation();
                 break;
-            case 1:  //开启调试模式(InstantRun需要开启)
-                XRouter.openDebug();
+            case 1:  //跳转到kotlin页面
+
                 break;
-            case 2:  //初始化XRouter
-                // 调试模式不是必须开启，但是为了防止有用户开启了InstantRun，但是
-                // 忘了开调试模式，导致无法使用Demo，如果使用了InstantRun，必须在
-                // 初始化之前开启调试模式，但是上线前需要关闭，InstantRun仅用于开
-                // 发阶段，线上开启调试模式有安全风险，可以使用BuildConfig.DEBUG
-                // 来区分环境
-                XRouter.openDebug();
-                XRouter.init(getActivity().getApplication());
+            case 2:  //跳转ForResult
+
                 break;
-            case 3:  //关闭XRouter
-                XRouter.getInstance().destroy();
+            case 3:  //获取Fragment实例
+
+                break;
+            case 4:  //携带参数的应用内跳转
+
+                break;
+            case 5:  //旧版本转场动画
+
+                break;
+            case 6:  //新版本转场动画
+
                 break;
             default:
                 break;
