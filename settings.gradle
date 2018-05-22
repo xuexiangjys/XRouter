@@ -1,1 +1,1 @@
-include ':app', ':xrouter-annotation', ':xrouter-compiler', ':xrouter-runtime', ':xrouter-plugin', ':module_kotlin'
+include ':app', ':xrouter-annotation', ':xrouter-compiler', ':xrouter-runtime', ':xrouter-plugin', ':module_kotlin', ':module_java'

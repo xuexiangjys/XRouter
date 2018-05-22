@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouterdemo.fragment.test;
+package com.xuexiang.xrouterdemo.fragment;
 
 import android.util.Log;
 

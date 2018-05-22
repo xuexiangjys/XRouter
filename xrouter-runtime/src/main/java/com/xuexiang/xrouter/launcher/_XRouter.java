@@ -48,6 +48,7 @@ import com.xuexiang.xrouter.utils.TextUtils;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static com.xuexiang.xrouter.utils.Consts.ROUTE_ROOT_SEIVICE;
 import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_AUTOWIRED;
 import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_INTERCEPTORS;
 
@@ -85,7 +86,7 @@ final class _XRouter {
     }
 
     /**
-     * Destroy xrouter, it can be used only in debug mode.
+     * Destroy XRouter, it can be used only in debug mode.
      */
     static synchronized void destroy() {
         if (debuggable()) {
@@ -247,6 +248,13 @@ final class _XRouter {
             return (T) postcard.getProvider();
         } catch (NoRouteFoundException ex) {
             XRLog.w(ex.getMessage());
+
+            if (debuggable() && !service.getName().contains(ROUTE_ROOT_SEIVICE)) { // Show friendly tips for user.
+                String tips = "There's no service matched!\n" +
+                        " service name = [" + service.getName() + "]";
+                Toast.makeText(mContext, tips, Toast.LENGTH_LONG).show();
+                XRLog.i(tips);
+            }
             return null;
         }
     }

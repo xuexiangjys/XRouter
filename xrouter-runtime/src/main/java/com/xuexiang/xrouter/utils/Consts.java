@@ -33,6 +33,8 @@ public final class Consts {
     public static final String DOT = ".";
     public static final String ROUTE_ROOT_PAKCAGE = "com.xuexiang.xrouter.routes";
 
+    public static final String ROUTE_ROOT_SEIVICE = "com.xuexiang.xrouter.facade.service";
+
     public static final String ROUTE_SERVICE_INTERCEPTORS = "/xrouter/service/interceptor";
     public static final String ROUTE_SERVICE_AUTOWIRED = "/xrouter/service/autowired";
     /**

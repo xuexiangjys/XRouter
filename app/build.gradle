@@ -6,7 +6,7 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId "com.xuexiang.xrouter"
+        applicationId "com.xuexiang.xrouterdemo"
         minSdkVersion 19
         targetSdkVersion build_versions.target_sdk
 
@@ -46,7 +46,7 @@ dependencies {
     androidTestImplementation deps.espresso.core
 
     implementation project(':module_kotlin')
-
+    implementation project(':module_java')
 
     implementation project(':xrouter-runtime')
     annotationProcessor project(':xrouter-compiler')

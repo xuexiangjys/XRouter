@@ -14,26 +14,32 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouterdemo.interceptor;
+package com.xuexiang.xrouterdemo.java;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-import com.xuexiang.xrouter.annotation.Router;
+import com.xuexiang.xrouter.annotation.Interceptor;
+import com.xuexiang.xrouter.facade.Postcard;
+import com.xuexiang.xrouter.facade.callback.InterceptorCallback;
+import com.xuexiang.xrouter.facade.template.IInterceptor;
 
 /**
  *
  *
  * @author xuexiang
- * @since 2018/5/22 上午12:59
+ * @since 2018/5/22 下午2:32
  */
-@Router(path = "/service/hello")
-public class HelloServiceImpl implements HelloService {
-    Context mContext;
-
+@Interceptor(priority = 90)
+public class TestInterceptor90 implements IInterceptor {
+    /**
+     * The operation of this tollgate.
+     *
+     * @param postcard meta
+     * @param callback cb
+     */
     @Override
-    public void sayHello(String name) {
-        Toast.makeText(mContext, "Hello " + name, Toast.LENGTH_SHORT).show();
+    public void process(Postcard postcard, InterceptorCallback callback) {
+        callback.onContinue(postcard);
     }
 
     /**
@@ -43,7 +49,6 @@ public class HelloServiceImpl implements HelloService {
      */
     @Override
     public void init(Context context) {
-        mContext = context;
-        Log.e("testService", HelloService.class.getName() + " has init.");
+        Log.e("test", "位于moudle1中的拦截器初始化了");
     }
 }

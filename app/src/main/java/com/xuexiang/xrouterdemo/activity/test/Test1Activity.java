@@ -26,7 +26,7 @@ import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouterdemo.R;
 import com.xuexiang.xrouterdemo.entity.TestObj;
 import com.xuexiang.xrouterdemo.entity.TestParcelable;
-import com.xuexiang.xrouterdemo.interceptor.HelloService;
+import com.xuexiang.xrouterdemo.service.HelloService;
 import com.xuexiang.xutil.net.JsonUtil;
 
 import java.util.List;

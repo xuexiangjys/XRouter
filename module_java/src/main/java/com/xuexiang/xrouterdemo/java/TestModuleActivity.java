@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package com.xuexiang.xrouterdemo.interceptor;
+package com.xuexiang.xrouterdemo.java;
 
+import android.app.Activity;
+import android.os.Bundle;
 
-import com.xuexiang.xrouter.facade.template.IProvider;
+import com.xuexiang.xrouter.annotation.Router;
 
-/**
- *
- *
- * @author xuexiang
- * @since 2018/5/22 上午12:59
- */
-public interface HelloService extends IProvider {
-    void sayHello(String name);
+@Router(path = "/module/1")
+public class TestModuleActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test_module);
+    }
 }
