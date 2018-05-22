@@ -41,6 +41,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly 'com.android.support:appcompat-v7:27.1.1'
 
-    implementation project(':xrouter-runtime')
-    annotationProcessor project(':xrouter-compiler')
+//    implementation project(':xrouter-runtime')
+//    annotationProcessor project(':xrouter-compiler')
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
 }
