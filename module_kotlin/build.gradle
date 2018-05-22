@@ -65,7 +65,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 //    implementation project(':xrouter-runtime')
-//    annotationProcessor project(':xrouter-compiler')
+//    kapt project(':xrouter-compiler')
     implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
 }
