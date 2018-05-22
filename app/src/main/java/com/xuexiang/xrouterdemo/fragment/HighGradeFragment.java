@@ -25,6 +25,7 @@ import com.xuexiang.xrouter.facade.callback.NavCallback;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouterdemo.entity.TestObj;
 import com.xuexiang.xrouterdemo.entity.TestParcelable;
+import com.xuexiang.xutil.system.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,13 @@ import java.util.Map;
  */
 @Page(name = "进阶用法（请先初始化）")
 public class HighGradeFragment extends SimpleListFragment {
+
+    @Override
+    protected void initArgs() {
+        super.initArgs();
+        PermissionUtils.requestSystemAlertWindow(getActivity());
+    }
+
     /**
      * 初始化例子
      *

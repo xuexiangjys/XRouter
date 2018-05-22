@@ -19,6 +19,7 @@ package com.xuexiang.xrouterdemo.interceptor;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -77,7 +78,11 @@ public class Test1Interceptor implements IInterceptor {
                 public void run() {
                     AlertDialog dialog = ab.create();
                     dialog.setCanceledOnTouchOutside(false);
-                    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ //6.0
+                        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+                    }else {
+                        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    }
                     dialog.show();
                 }
             });

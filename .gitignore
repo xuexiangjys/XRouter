@@ -1,5 +1,6 @@
 *.iml
 /LocalRepository
+/keystores
 .gradle
 /local.properties
 /.idea/workspace.xml
