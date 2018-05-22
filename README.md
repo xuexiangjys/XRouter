@@ -115,6 +115,58 @@ private boolean isDebug() {
 }
 ```
 
+### 2.2 在Library中使用XRouter的配置
+
+1.进行moduleName注册
+
+```
+defaultConfig {
+    ...
+    javaCompileOptions {
+        annotationProcessorOptions {
+            arguments = [ moduleName : project.getName() ]
+        }
+    }
+}
+```
+
+2.在项目的 build.gradle 中增加XRouter依赖。
+
+```
+dependencies {
+    ···
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+}
+```
+
+### 2.3 在Kotlin项目中使用XRouter的配置
+
+1.引用kotlin-kapt插件
+
+```
+apply plugin: 'kotlin-kapt'
+```
+
+2.进行moduleName注册
+
+```
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
+    }
+}
+```
+
+3.在项目的 build.gradle 中增加XRouter依赖。
+
+```
+dependencies {
+    ···
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
+    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+}
+```
 
 ## 3、XRouter使用
 
