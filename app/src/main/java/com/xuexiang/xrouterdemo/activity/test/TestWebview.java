@@ -16,41 +16,24 @@
 
 package com.xuexiang.xrouterdemo.activity.test;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
-import com.xuexiang.xrouter.annotation.AutoWired;
+import android.webkit.WebView;
 import com.xuexiang.xrouter.annotation.Router;
-import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouterdemo.R;
 
-/**
- * 自动注入的测试用例
- */
-@Router(path = "/test/activity3")
-public class Test3Activity extends AppCompatActivity {
+@Router(path = "/test/webview")
+public class TestWebview extends Activity {
 
-    @AutoWired
-    String name;
-
-    @AutoWired
-    int age;
-
-    @AutoWired(name = "boy")
-    boolean girl;
-
-    // 这个字段没有注解，是不会自动注入的
-    private long high;
+    WebView webview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test1);
-        XRouter.getInstance().inject(this);
+        setContentView(R.layout.activity_test_webview);
 
-        String params = String.format("name=%s, age=%s, girl=%s, high=%s", name, age, girl, high);
 
-        ((TextView)findViewById(R.id.test)).setText("I am " + Test3Activity.class.getName());
-        ((TextView)findViewById(R.id.test2)).setText(params);
+        webview = (WebView) findViewById(R.id.webview);
+        webview.loadUrl(getIntent().getStringExtra("url"));
     }
 }

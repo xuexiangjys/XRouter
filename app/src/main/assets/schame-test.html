@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2018 xuexiangjys(xuexiangjys@163.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtai a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<h2>跳转测试</h2>
+
+<h2>自定义Scheme[通常来说都是这样的]</h2>
+<p><a href="xrouter://xuexiangjys.github.io/test/activity1">xrouter://xuexiangjys.github.io/test/activity1</a></p>
+<p><a href="xrouter://xuexiangjys.github.io/test/activity1?url=https%3a%2f%2fm.abc.com%3fa%3db%26c%3dd">测试URL Encode情况</a></p>
+<p><a href="xrouter://xuexiangjys.github.io/test/activity1?name=alex&age=18&boy=true&high=180&obj=%7b%22name%22%3a%22jack%22%2c%22id%22%3a666%7d">xrouter://xuexiangjys.github.io/test/activity1?name=alex&age=18&boy=true&high=180&obj={"name":"jack","id":"666"}</a></p>
+<p><a href="xrouter://xuexiangjys.github.io/test/activity2">xrouter://xuexiangjys.github.io/test/activity2</a></p>
+<p><a href="xrouter://xuexiangjys.github.io/test/activity2?key1=value1">xrouter://xuexiangjys.github.io/test/activity2?key1=value1</a></p>
+<p><a href="xrouter://xuexiangjys.github.io/test/activity3?name=alex&age=18&boy=true&high=180">xrouter://xuexiangjys.github.io/test/activity3?name=alex&age=18&boy=true&high=180</a></p>
+
+<h2>App Links[防止被App屏蔽]</h2>
+<p><a href="http://xuexiangjys.github.io/test/activity1">http://xuexiangjys.github.io/test/activity1</a></p>
+<p><a href="http://xuexiangjys.github.io/test/activity2">http://xuexiangjys.github.io/test/activity2</a></p>
+
+</body>
+</html>

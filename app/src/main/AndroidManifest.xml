@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xuexiang.xrouterdemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -47,6 +50,8 @@
                     android:scheme="https"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.test.TestWebview"/>
 
         <activity android:name=".activity.test.Test1Activity"/>
         <activity android:name=".activity.test.Test2Activity"/>

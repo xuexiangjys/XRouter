@@ -22,6 +22,7 @@ import android.view.View;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.base.PageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
+import com.xuexiang.xrouterdemo.fragment.test.HighGradeFragment;
 import com.xuexiang.xutil.common.ClickUtils;
 
 /**
@@ -40,7 +41,8 @@ public class MainFragment extends PageContainerListFragment {
     protected Class[] getPagesClasses() {
         return new Class[]{
                 BaseSettingFragment.class,
-                BaseFunctionFragment.class
+                BaseFunctionFragment.class,
+                HighGradeFragment.class
         };
     }
 

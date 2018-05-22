@@ -27,6 +27,7 @@ import com.xuexiang.xrouterdemo.R;
 import com.xuexiang.xrouterdemo.entity.TestObj;
 import com.xuexiang.xrouterdemo.entity.TestParcelable;
 import com.xuexiang.xrouterdemo.interceptor.HelloService;
+import com.xuexiang.xutil.net.JsonUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class Test1Activity extends AppCompatActivity {
                 high,
                 url,
                 pac,
-                obj,
+                JsonUtil.toJson(obj),
                 ch,
                 fl,
                 dou,
