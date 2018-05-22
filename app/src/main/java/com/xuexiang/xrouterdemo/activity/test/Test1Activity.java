@@ -34,7 +34,7 @@ import java.util.Map;
 
 
 /**
- * https://m.aliyun.com/test/activity1?name=老王&age=23&boy=true&high=180
+ * https://xuexiangjys.github.io/test/activity1?name=老王&age=23&boy=true&high=180
  */
 @Router(path = "/test/activity1")
 public class Test1Activity extends AppCompatActivity {

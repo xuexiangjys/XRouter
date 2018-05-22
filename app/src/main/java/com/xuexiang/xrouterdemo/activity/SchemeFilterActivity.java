@@ -30,7 +30,7 @@ public class SchemeFilterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        直接通过ARouter处理外部Uri
+//        直接通过XRouter处理外部Uri
         Uri uri = getIntent().getData();
         XRouter.getInstance().build(uri).navigation(this, new NavCallback() {
             @Override
