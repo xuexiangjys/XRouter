@@ -25,6 +25,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
@@ -328,22 +330,7 @@ final class _XRouter {
         switch (postcard.getType()) {
             case ACTIVITY:
                 // Build intent
-                final Intent intent = new Intent(currentContext, postcard.getDestination());
-                intent.putExtras(postcard.getExtras());
-
-                // Set flags.
-                int flags = postcard.getFlags();
-                if (flags != -1) {
-                    intent.setFlags(flags);
-                } else if (!(currentContext instanceof Activity)) {    // Non activity, need less one flag.
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                }
-
-                // Set Actions
-                String action = postcard.getAction();
-                if (!TextUtils.isEmpty(action)) {
-                    intent.setAction(action);
-                }
+                final Intent intent = buildIntent(currentContext, postcard);
 
                 // Navigation in main looper.
                 mMainHandler.post(new Runnable() {
@@ -370,18 +357,8 @@ final class _XRouter {
             case BROADCAST:
             case CONTENT_PROVIDER:
             case FRAGMENT:
-                Class fragmentMeta = postcard.getDestination();
-                try {
-                    Object instance = fragmentMeta.getConstructor().newInstance();
-                    if (instance instanceof Fragment) {
-                        ((Fragment) instance).setArguments(postcard.getExtras());
-                    } else if (instance instanceof android.support.v4.app.Fragment) {
-                        ((android.support.v4.app.Fragment) instance).setArguments(postcard.getExtras());
-                    }
-                    return instance;
-                } catch (Exception ex) {
-                    XRLog.e("Fetch fragment instance error, " + TextUtils.formatStackTrace(ex.getStackTrace()));
-                }
+                Object instance = findFragment(postcard);
+                if (instance != null) return instance;
             case METHOD:
             case SERVICE:
             default:
@@ -390,7 +367,6 @@ final class _XRouter {
 
         return null;
     }
-
 
     /**
      * 进行路由导航 [Fragment]
@@ -460,14 +436,8 @@ final class _XRouter {
         switch (postcard.getType()) {
             case ACTIVITY:
                 // Build intent
-                final Intent intent = new Intent(fragment.getActivity(), postcard.getDestination());
-                intent.putExtras(postcard.getExtras());
+                final Intent intent = buildIntent(fragment.getActivity(), postcard);
 
-                // Set flags.
-                int flags = postcard.getFlags();
-                if (flags != -1) {
-                    intent.setFlags(flags);
-                }
                 // Navigation in main looper.
                 mMainHandler.post(new Runnable() {
                     @Override
@@ -497,18 +467,8 @@ final class _XRouter {
             case BROADCAST:
             case CONTENT_PROVIDER:
             case FRAGMENT:
-                Class fragmentMeta = postcard.getDestination();
-                try {
-                    Object instance = fragmentMeta.getConstructor().newInstance();
-                    if (instance instanceof Fragment) {
-                        ((Fragment) instance).setArguments(postcard.getExtras());
-                    } else if (instance instanceof android.support.v4.app.Fragment) {
-                        ((android.support.v4.app.Fragment) instance).setArguments(postcard.getExtras());
-                    }
-                    return instance;
-                } catch (Exception ex) {
-                    XRLog.e("Fetch fragment instance error, " + TextUtils.formatStackTrace(ex.getStackTrace()));
-                }
+                Object instance = findFragment(postcard);
+                if (instance != null) return instance;
             case METHOD:
             case SERVICE:
             default:
@@ -585,14 +545,8 @@ final class _XRouter {
         switch (postcard.getType()) {
             case ACTIVITY:
                 // Build intent
-                final Intent intent = new Intent(fragment.getActivity(), postcard.getDestination());
-                intent.putExtras(postcard.getExtras());
+                final Intent intent = buildIntent(fragment.getActivity(), postcard);
 
-                // Set flags.
-                int flags = postcard.getFlags();
-                if (flags != -1) {
-                    intent.setFlags(flags);
-                }
                 // Navigation in main looper.
                 mMainHandler.post(new Runnable() {
                     @Override
@@ -622,24 +576,59 @@ final class _XRouter {
             case BROADCAST:
             case CONTENT_PROVIDER:
             case FRAGMENT:
-                Class fragmentMeta = postcard.getDestination();
-                try {
-                    Object instance = fragmentMeta.getConstructor().newInstance();
-                    if (instance instanceof Fragment) {
-                        ((Fragment) instance).setArguments(postcard.getExtras());
-                    } else if (instance instanceof android.support.v4.app.Fragment) {
-                        ((android.support.v4.app.Fragment) instance).setArguments(postcard.getExtras());
-                    }
-                    return instance;
-                } catch (Exception ex) {
-                    XRLog.e("Fetch fragment instance error, " + TextUtils.formatStackTrace(ex.getStackTrace()));
-                }
+                Object instance = findFragment(postcard);
+                if (instance != null) return instance;
             case METHOD:
             case SERVICE:
             default:
                 return null;
         }
 
+        return null;
+    }
+
+    /**
+     * 构建intent
+     *
+     * @param context
+     * @param postcard
+     * @return
+     */
+    @NonNull
+    private Intent buildIntent(Context context, Postcard postcard) {
+        final Intent intent = new Intent(context, postcard.getDestination());
+        intent.putExtras(postcard.getExtras());
+
+        // Set flags.
+        int flags = postcard.getFlags();
+        if (flags != -1) {
+            intent.setFlags(flags);
+        } else if (!(context instanceof Activity)) {    // Non activity, need less one flag.
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+
+        // Set Actions
+        String action = postcard.getAction();
+        if (!TextUtils.isEmpty(action)) {
+            intent.setAction(action);
+        }
+        return intent;
+    }
+
+    @Nullable
+    private Object findFragment(Postcard postcard) {
+        Class fragmentMeta = postcard.getDestination();
+        try {
+            Object instance = fragmentMeta.getConstructor().newInstance();
+            if (instance instanceof Fragment) {
+                ((Fragment) instance).setArguments(postcard.getExtras());
+            } else if (instance instanceof android.support.v4.app.Fragment) {
+                ((android.support.v4.app.Fragment) instance).setArguments(postcard.getExtras());
+            }
+            return instance;
+        } catch (Exception ex) {
+            XRLog.e("Fetch fragment instance error, " + TextUtils.formatStackTrace(ex.getStackTrace()));
+        }
         return null;
     }
 
