@@ -49,7 +49,7 @@ public class Test1Interceptor implements IInterceptor {
     @Override
     public void process(final Postcard postcard, final InterceptorCallback callback) {
         if ("/test/activity4".equals(postcard.getPath())) {
-            final AlertDialog.Builder ab = new AlertDialog.Builder(XUtil.getContext());
+            final AlertDialog.Builder ab = new AlertDialog.Builder(XUtil.get().getActivityLifecycleHelper().getCurrentActivity());
             ab.setCancelable(false);
             ab.setTitle("温馨提醒");
             ab.setMessage("想要跳转到Test4Activity么？(触发了\"/inter/test1\"拦截器，拦截了本次跳转)");
@@ -78,11 +78,6 @@ public class Test1Interceptor implements IInterceptor {
                 public void run() {
                     AlertDialog dialog = ab.create();
                     dialog.setCanceledOnTouchOutside(false);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //6.0
-                        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
-                    } else {
-                        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                    }
                     dialog.show();
                 }
             });

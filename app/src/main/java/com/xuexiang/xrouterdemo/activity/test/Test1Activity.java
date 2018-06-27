@@ -61,6 +61,9 @@ public class Test1Activity extends AppCompatActivity {
     double dou = 12.01d;
 
     @AutoWired
+    byte aByte;
+
+    @AutoWired
     TestParcelable pac;
 
     @AutoWired
@@ -95,7 +98,7 @@ public class Test1Activity extends AppCompatActivity {
         // url = getIntent().getStringExtra("url");
 
         String params = String.format(
-                "name=%s,\n age=%s, \n height=%s,\n girl=%s,\n high=%s,\n url=%s,\n pac=%s,\n obj=%s \n ch=%s \n fl = %s, \n dou = %s, \n objList=%s, \n map=%s",
+                "name=%s,\n age=%s, \n height=%s,\n girl=%s,\n high=%s,\n url=%s,\n pac=%s,\n obj=%s \n ch=%s \n fl = %s, \n dou = %s, \n aByte = %s, \n objList=%s, \n map=%s",
                 name,
                 age,
                 height,
@@ -107,6 +110,7 @@ public class Test1Activity extends AppCompatActivity {
                 ch,
                 fl,
                 dou,
+                aByte,
                 objList,
                 map
         );

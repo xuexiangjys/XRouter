@@ -17,7 +17,7 @@
 package com.xuexiang.xrouterdemo.fragment;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.SimpleListFragment;
+import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xrouter.launcher.XRouter;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2018/5/22 下午2:23
  */
 @Page(name = "多模块注册（请先初始化）")
-public class MultipleModuleFragment extends SimpleListFragment {
+public class MultipleModuleFragment extends XPageSimpleListFragment {
     /**
      * 初始化例子
      *

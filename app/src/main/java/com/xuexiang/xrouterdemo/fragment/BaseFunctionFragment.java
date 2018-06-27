@@ -21,10 +21,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.SimpleListFragment;
+import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouterdemo.R;
 import com.xuexiang.xutil.tip.ToastUtils;
@@ -36,7 +35,7 @@ import java.util.List;
  * @since 2018/5/22 上午12:45
  */
 @Page(name = "基础功能（请先初始化)")
-public class BaseFunctionFragment extends SimpleListFragment {
+public class BaseFunctionFragment extends XPageSimpleListFragment {
     /**
      * 初始化例子
      *

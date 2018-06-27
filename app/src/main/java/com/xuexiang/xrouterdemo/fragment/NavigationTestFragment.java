@@ -19,7 +19,7 @@ package com.xuexiang.xrouterdemo.fragment;
 import android.util.Log;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.SimpleListFragment;
+import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xrouter.facade.Postcard;
 import com.xuexiang.xrouter.facade.callback.NavCallback;
 import com.xuexiang.xrouter.launcher.XRouter;
@@ -32,7 +32,7 @@ import java.util.List;
  * @since 2018/5/22 下午2:50
  */
 @Page(name = "路由导航测试")
-public class NavigationTestFragment extends SimpleListFragment {
+public class NavigationTestFragment extends XPageSimpleListFragment {
 
     /**
      * 初始化例子

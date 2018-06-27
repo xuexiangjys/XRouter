@@ -19,13 +19,12 @@ package com.xuexiang.xrouterdemo.fragment;
 import android.util.Log;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.SimpleListFragment;
+import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xrouter.facade.Postcard;
 import com.xuexiang.xrouter.facade.callback.NavCallback;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouterdemo.entity.TestObj;
 import com.xuexiang.xrouterdemo.entity.TestParcelable;
-import com.xuexiang.xutil.system.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +36,7 @@ import java.util.Map;
  * @since 2018/5/22 上午10:20
  */
 @Page(name = "进阶用法（请先初始化）")
-public class HighGradeFragment extends SimpleListFragment {
-
-    @Override
-    protected void initArgs() {
-        super.initArgs();
-        PermissionUtils.requestSystemAlertWindow(getActivity());
-    }
+public class HighGradeFragment extends XPageSimpleListFragment {
 
     /**
      * 初始化例子
@@ -107,6 +100,7 @@ public class HighGradeFragment extends SimpleListFragment {
                         .withObject("obj", testObj)
                         .withObject("objList", objList)
                         .withObject("map", map)
+                        .withByte("aByte", (byte) 12)
                         .navigation();
                 break;
             default:

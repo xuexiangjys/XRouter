@@ -20,7 +20,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.PageContainerListFragment;
+import com.xuexiang.xpage.base.XPageContainerListFragment;
 import com.xuexiang.xpage.utils.TitleBar;
 import com.xuexiang.xutil.common.ClickUtils;
 
@@ -29,7 +29,7 @@ import com.xuexiang.xutil.common.ClickUtils;
  * @since 2018/5/21 下午11:30
  */
 @Page(name = "XRouter")
-public class MainFragment extends PageContainerListFragment {
+public class MainFragment extends XPageContainerListFragment {
 
     /**
      * 获取页面的类集合[使用@Page注解进行注册的页面]

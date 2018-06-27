@@ -17,7 +17,7 @@
 package com.xuexiang.xrouterdemo.fragment;
 
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.base.SimpleListFragment;
+import com.xuexiang.xpage.base.XPageSimpleListFragment;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xrouterdemo.service.HelloService;
 import com.xuexiang.xrouterdemo.service.SingleService;
@@ -29,7 +29,7 @@ import java.util.List;
  * @since 2018/5/22 下午1:43
  */
 @Page(name = "服务发现（请先初始化）")
-public class ServiceFoundFragment extends SimpleListFragment {
+public class ServiceFoundFragment extends XPageSimpleListFragment {
     /**
      * 初始化例子
      *
