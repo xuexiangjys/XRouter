@@ -78,9 +78,9 @@ public class Test1Interceptor implements IInterceptor {
                 public void run() {
                     AlertDialog dialog = ab.create();
                     dialog.setCanceledOnTouchOutside(false);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ //6.0
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //6.0
                         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
-                    }else {
+                    } else {
                         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                     }
                     dialog.show();

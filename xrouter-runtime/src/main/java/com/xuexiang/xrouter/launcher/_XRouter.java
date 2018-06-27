@@ -18,6 +18,7 @@ package com.xuexiang.xrouter.launcher;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,7 +26,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.xuexiang.xrouter.core.LogisticsCenter;
@@ -273,22 +273,7 @@ final class _XRouter {
         } catch (NoRouteFoundException ex) {
             XRLog.e(ex);
 
-            if (debuggable()) { // Show friendly tips for user.
-                String tips = "There's no route matched!\n" +
-                        " Path = [" + postcard.getPath() + "]\n" +
-                        " Group = [" + postcard.getGroup() + "]";
-                Toast.makeText(mContext, tips, Toast.LENGTH_LONG).show();
-                XRLog.i(tips);
-            }
-
-            if (callback != null) {
-                callback.onLost(postcard);
-            } else {    // No callback for this invoke, then we use the global degrade service.
-                DegradeService degradeService = XRouter.getInstance().navigation(DegradeService.class);
-                if (degradeService != null) {
-                    degradeService.onLost(context, postcard);
-                }
-            }
+            handleNoRouteException(postcard, callback, context);
 
             return null;
         }
@@ -354,6 +339,12 @@ final class _XRouter {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
 
+                // Set Actions
+                String action = postcard.getAction();
+                if (!TextUtils.isEmpty(action)) {
+                    intent.setAction(action);
+                }
+
                 // Navigation in main looper.
                 mMainHandler.post(new Runnable() {
                     @Override
@@ -415,22 +406,7 @@ final class _XRouter {
         } catch (NoRouteFoundException ex) {
             XRLog.e(ex);
 
-            if (debuggable()) { // Show friendly tips for user.
-                String tips = "There's no route matched!\n" +
-                        " Path = [" + postcard.getPath() + "]\n" +
-                        " Group = [" + postcard.getGroup() + "]";
-                Toast.makeText(mContext, tips, Toast.LENGTH_LONG).show();
-                XRLog.i(tips);
-            }
-
-            if (callback != null) {
-                callback.onLost(postcard);
-            } else {    // No callback for this invoke, then we use the global degrade service.
-                DegradeService degradeService = XRouter.getInstance().navigation(DegradeService.class);
-                if (degradeService != null) {
-                    degradeService.onLost(fragment.getActivity(), postcard);
-                }
-            }
+            handleNoRouteException(postcard, callback, fragment.getActivity());
 
             return null;
         }
@@ -540,5 +516,156 @@ final class _XRouter {
         }
 
         return null;
+    }
+
+    /**
+     * 进行路由导航 [Fragment]
+     *
+     * @param fragment    fragment
+     * @param postcard    路由信息容器
+     * @param requestCode 请求码
+     * @param callback    路由导航回调
+     */
+    protected Object navigation(final android.support.v4.app.Fragment fragment, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
+        try {
+            LogisticsCenter.completion(postcard);
+        } catch (NoRouteFoundException ex) {
+            XRLog.e(ex);
+
+            handleNoRouteException(postcard, callback, fragment.getActivity());
+
+            return null;
+        }
+
+        if (callback != null) {
+            callback.onFound(postcard);
+        }
+
+        if (!postcard.isGreenChannel()) {   // It must be run in async thread, maybe interceptor cost too mush time made ANR.
+            interceptorService.doInterceptions(postcard, new InterceptorCallback() {
+                /**
+                 * 继续执行下一个拦截器
+                 *
+                 * @param postcard 路由信息
+                 */
+                @Override
+                public void onContinue(Postcard postcard) {
+                    _navigation(fragment, postcard, requestCode, callback);
+                }
+
+                /**
+                 * 拦截中断, 当该方法执行后，通道将会被销毁
+                 *
+                 * @param exception 中断的原因.
+                 */
+                @Override
+                public void onInterrupt(Throwable exception) {
+                    if (callback != null) {
+                        callback.onInterrupt(postcard);
+                    }
+                    XRLog.i("Navigation failed, termination by interceptor : " + exception.getMessage());
+                }
+            });
+        } else {
+            return _navigation(fragment, postcard, requestCode, callback);
+        }
+        return null;
+    }
+
+    /**
+     * 真正执行导航的方法 [Fragment]
+     *
+     * @param fragment
+     * @param postcard    路由容器
+     * @param requestCode 请求code
+     * @param callback    导航回调
+     * @return
+     */
+    private Object _navigation(final android.support.v4.app.Fragment fragment, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
+        switch (postcard.getType()) {
+            case ACTIVITY:
+                // Build intent
+                final Intent intent = new Intent(fragment.getActivity(), postcard.getDestination());
+                intent.putExtras(postcard.getExtras());
+
+                // Set flags.
+                int flags = postcard.getFlags();
+                if (flags != -1) {
+                    intent.setFlags(flags);
+                }
+                // Navigation in main looper.
+                mMainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (requestCode > 0) {  // Need start for result
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                                fragment.startActivityForResult(intent, requestCode);
+                            } else {
+                                fragment.startActivityForResult(intent, requestCode, postcard.getOptionsBundle());
+                            }
+                        } else {
+                            ActivityCompat.startActivity(fragment.getActivity(), intent, postcard.getOptionsBundle());
+                        }
+
+                        if ((-1 != postcard.getEnterAnim() && -1 != postcard.getExitAnim())) {    // Old version.
+                            (fragment.getActivity()).overridePendingTransition(postcard.getEnterAnim(), postcard.getExitAnim());
+                        }
+
+                        if (callback != null) { // Navigation over.
+                            callback.onArrival(postcard);
+                        }
+                    }
+                });
+                break;
+            case PROVIDER:
+                return postcard.getProvider();
+            case BROADCAST:
+            case CONTENT_PROVIDER:
+            case FRAGMENT:
+                Class fragmentMeta = postcard.getDestination();
+                try {
+                    Object instance = fragmentMeta.getConstructor().newInstance();
+                    if (instance instanceof Fragment) {
+                        ((Fragment) instance).setArguments(postcard.getExtras());
+                    } else if (instance instanceof android.support.v4.app.Fragment) {
+                        ((android.support.v4.app.Fragment) instance).setArguments(postcard.getExtras());
+                    }
+                    return instance;
+                } catch (Exception ex) {
+                    XRLog.e("Fetch fragment instance error, " + TextUtils.formatStackTrace(ex.getStackTrace()));
+                }
+            case METHOD:
+            case SERVICE:
+            default:
+                return null;
+        }
+
+        return null;
+    }
+
+    /**
+     * 处理路由丢失的错误
+     *
+     * @param postcard
+     * @param callback
+     * @param activity
+     */
+    private void handleNoRouteException(Postcard postcard, NavigationCallback callback, Context activity) {
+        if (debuggable()) { // Show friendly tips for user.
+            String tips = "There's no route matched!\n" +
+                    " Path = [" + postcard.getPath() + "]\n" +
+                    " Group = [" + postcard.getGroup() + "]";
+            Toast.makeText(mContext, tips, Toast.LENGTH_LONG).show();
+            XRLog.i(tips);
+        }
+
+        if (callback != null) {
+            callback.onLost(postcard);
+        } else {    // No callback for this invoke, then we use the global degrade service.
+            DegradeService degradeService = XRouter.getInstance().navigation(DegradeService.class);
+            if (degradeService != null) {
+                degradeService.onLost(activity, postcard);
+            }
+        }
     }
 }

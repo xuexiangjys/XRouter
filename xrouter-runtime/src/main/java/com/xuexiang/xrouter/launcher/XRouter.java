@@ -17,9 +17,10 @@
 package com.xuexiang.xrouter.launcher;
 
 import android.app.Application;
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
 
 import com.xuexiang.xrouter.exception.InitException;
 import com.xuexiang.xrouter.facade.Postcard;
@@ -48,6 +49,7 @@ public final class XRouter {
 
     /**
      * 初始化XRouter，必须先初始化
+     *
      * @param application
      */
     public static void init(Application application) {
@@ -90,6 +92,7 @@ public final class XRouter {
 
     /**
      * 是否是调试模式
+     *
      * @return
      */
     public static boolean debuggable() {
@@ -105,6 +108,7 @@ public final class XRouter {
 
     /**
      * 设置拦截器执行的线程
+     *
      * @param tpe
      */
     public static synchronized void setExecutor(ThreadPoolExecutor tpe) {
@@ -129,6 +133,7 @@ public final class XRouter {
 
     /**
      * 设置日志接口
+     *
      * @param userLogger
      */
     public static void setLogger(ILogger userLogger) {
@@ -138,7 +143,7 @@ public final class XRouter {
     /**
      * 注入参数和服务
      */
-    public void inject(Object target) {
+    public void inject(@NonNull Object target) {
         _XRouter.inject(target);
     }
 
@@ -147,7 +152,7 @@ public final class XRouter {
      *
      * @param path Where you go.
      */
-    public Postcard build(String path) {
+    public Postcard build(@NonNull String path) {
         return _XRouter.getInstance().build(path);
     }
 
@@ -167,7 +172,7 @@ public final class XRouter {
      *
      * @param url the path
      */
-    public Postcard build(Uri url) {
+    public Postcard build(@NonNull Uri url) {
         return _XRouter.getInstance().build(url);
     }
 
@@ -178,7 +183,7 @@ public final class XRouter {
      * @param <T>     return type
      * @return instance of service
      */
-    public <T> T navigation(Class<? extends T> service) {
+    public <T> T navigation(@NonNull Class<? extends T> service) {
         return _XRouter.getInstance().navigation(service);
     }
 
@@ -190,7 +195,7 @@ public final class XRouter {
      * @param requestCode Set for startActivityForResult
      * @param callback    路由导航回调
      */
-    public Object navigation(Context context, Postcard postcard, int requestCode, NavigationCallback callback) {
+    public Object navigation(@NonNull Context context, @NonNull Postcard postcard, int requestCode, NavigationCallback callback) {
         return _XRouter.getInstance().navigation(context, postcard, requestCode, callback);
     }
 
@@ -202,7 +207,19 @@ public final class XRouter {
      * @param requestCode Set for startActivityForResult
      * @param callback    路由导航回调
      */
-    public Object navigation(Fragment fragment, Postcard postcard, int requestCode, NavigationCallback callback) {
+    public Object navigation(@NonNull Fragment fragment, @NonNull Postcard postcard, int requestCode, NavigationCallback callback) {
+        return _XRouter.getInstance().navigation(fragment, postcard, requestCode, callback);
+    }
+
+    /**
+     * 启动路由导航
+     *
+     * @param fragment
+     * @param postcard
+     * @param requestCode Set for startActivityForResult
+     * @param callback    路由导航回调
+     */
+    public Object navigation(@NonNull android.support.v4.app.Fragment fragment, @NonNull Postcard postcard, int requestCode, NavigationCallback callback) {
         return _XRouter.getInstance().navigation(fragment, postcard, requestCode, callback);
     }
 }

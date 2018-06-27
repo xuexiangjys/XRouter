@@ -93,6 +93,11 @@ public final class Postcard extends RouteInfo {
      */
     private int exitAnim = -1;
 
+    /**
+     * 增加设置intent的action
+     */
+    private String action;
+
     public Postcard() {
         this(null, null);
     }
@@ -153,6 +158,10 @@ public final class Postcard extends RouteInfo {
 
     public int getExitAnim() {
         return exitAnim;
+    }
+
+    public String getAction() {
+        return action;
     }
 
     public Postcard setProvider(IProvider provider) {
@@ -230,7 +239,7 @@ public final class Postcard extends RouteInfo {
     /**
      * 路由导航（startActivityForResult）
      *
-     * @param fragment     fragment
+     * @param fragment    fragment
      * @param requestCode startActivityForResult's param
      */
     public void navigation(Fragment fragment, int requestCode) {
@@ -666,6 +675,16 @@ public final class Postcard extends RouteInfo {
         return this;
     }
 
+    /**
+     * Action动作
+     * @param action
+     * @return
+     */
+    public Postcard withAction(String action) {
+        this.action = action;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Postcard{" +
@@ -679,6 +698,7 @@ public final class Postcard extends RouteInfo {
                 ", optionsCompat=" + optionsCompat +
                 ", enterAnim=" + enterAnim +
                 ", exitAnim=" + exitAnim +
+                ", action=" + action +
                 "}\n" +
                 super.toString();
     }
