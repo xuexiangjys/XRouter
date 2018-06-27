@@ -50,7 +50,7 @@ buildscript {
     ···
     dependencies {
         ···
-        classpath 'com.github.xuexiangjys.XRouter:xrouter-plugin:1.0.0'
+        classpath 'com.github.xuexiangjys.XRouter:xrouter-plugin:1.0.1'
     }
 }
 ```
@@ -62,8 +62,8 @@ apply plugin: 'com.xuexiang.xrouter' //引用xrouter-plugin插件实现自动注
 
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
 }
 
 ```
@@ -117,8 +117,8 @@ defaultConfig {
 ```
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
 }
 ```
 
@@ -145,8 +145,8 @@ kapt {
 ```
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
-    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
+    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
 }
 ```
 
@@ -171,7 +171,7 @@ https://github.com/alibaba/ARouter
 
 [![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
 
-[xrouter-svg]: https://img.shields.io/badge/XRouter-v1.0.0-brightgreen.svg
+[xrouter-svg]: https://img.shields.io/badge/XRouter-v1.0.1-brightgreen.svg
 [xrouter]: https://github.com/xuexiangjys/XRouter
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
 [api]: https://android-arsenal.com/api?level=14

@@ -66,6 +66,6 @@ dependencies {
 
     implementation project(':xrouter-runtime')
     kapt project(':xrouter-compiler')
-//    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.0'
-//    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.0'
+//    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
+//    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
 }
