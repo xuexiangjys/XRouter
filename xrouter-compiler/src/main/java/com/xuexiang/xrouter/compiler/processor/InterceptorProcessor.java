@@ -71,7 +71,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
  */
 @AutoService(Processor.class)
 @SupportedOptions(KEY_MODULE_NAME)
-@SupportedSourceVersion(SourceVersion.RELEASE_7)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes(ANNOTATION_TYPE_INTECEPTOR)
 public class InterceptorProcessor extends AbstractProcessor {
     /**
