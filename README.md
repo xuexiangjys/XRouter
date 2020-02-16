@@ -1,5 +1,9 @@
 # XRouter
-[![xrouter][xrouter-svg]][xrouter]  [![api][apisvg]][api]
+
+[![](https://jitpack.io/v/xuexiangjys/XRouter.svg)](https://jitpack.io/#xuexiangjys/XRouter)
+[![api](https://img.shields.io/badge/API-14+-brightgreen.svg)](https://android-arsenal.com/api?level=14)
+[![I](https://img.shields.io/github/issues/xuexiangjys/XRouter.svg)](https://github.com/xuexiangjys/XRouter/issues)
+[![Star](https://img.shields.io/github/stars/xuexiangjys/XRouter.svg)](https://github.com/xuexiangjys/XRouter)
 
 一个轻量级的Android路由框架，基于ARouter上进行改良，优化Fragment的使用，可结合XPage使用。
 
@@ -596,11 +600,6 @@ https://github.com/alibaba/ARouter
 打开微信扫一扫，向我提问：
 
 ![这里写图片描述](https://img-blog.csdn.net/20180511001512918?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZXhpYW5nanlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-
-[xrouter-svg]: https://img.shields.io/badge/XRouter-v1.0.1-brightgreen.svg
-[xrouter]: https://github.com/xuexiangjys/XRouter
-[apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
-[api]: https://android-arsenal.com/api?level=14
 
 [demo-gif]: https://github.com/xuexiangjys/XRouter/blob/master/img/xrouter.gif
 [download-svg]: https://img.shields.io/badge/downloads-1.8M-blue.svg
