@@ -16,6 +16,10 @@
 
 package com.xuexiang.xrouter.launcher;
 
+import static com.xuexiang.xrouter.utils.Consts.ROUTE_ROOT_SEIVICE;
+import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_AUTOWIRED;
+import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_INTERCEPTORS;
+
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
@@ -25,10 +29,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import com.xuexiang.xrouter.core.LogisticsCenter;
 import com.xuexiang.xrouter.exception.HandlerException;
@@ -49,10 +54,6 @@ import com.xuexiang.xrouter.utils.Consts;
 import com.xuexiang.xrouter.utils.TextUtils;
 
 import java.util.concurrent.ThreadPoolExecutor;
-
-import static com.xuexiang.xrouter.utils.Consts.ROUTE_ROOT_SEIVICE;
-import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_AUTOWIRED;
-import static com.xuexiang.xrouter.utils.Consts.ROUTE_SERVICE_INTERCEPTORS;
 
 /**
  * XRouter 核心功能
@@ -486,7 +487,7 @@ final class _XRouter {
      * @param requestCode 请求码
      * @param callback    路由导航回调
      */
-    protected Object navigation(final android.support.v4.app.Fragment fragment, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
+    protected Object navigation(final androidx.fragment.app.Fragment fragment, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
         try {
             LogisticsCenter.completion(postcard);
         } catch (NoRouteFoundException ex) {
@@ -541,7 +542,7 @@ final class _XRouter {
      * @param callback    导航回调
      * @return
      */
-    private Object _navigation(final android.support.v4.app.Fragment fragment, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
+    private Object _navigation(final androidx.fragment.app.Fragment fragment, final Postcard postcard, final int requestCode, final NavigationCallback callback) {
         switch (postcard.getType()) {
             case ACTIVITY:
                 // Build intent
@@ -622,8 +623,8 @@ final class _XRouter {
             Object instance = fragmentMeta.getConstructor().newInstance();
             if (instance instanceof Fragment) {
                 ((Fragment) instance).setArguments(postcard.getExtras());
-            } else if (instance instanceof android.support.v4.app.Fragment) {
-                ((android.support.v4.app.Fragment) instance).setArguments(postcard.getExtras());
+            } else if (instance instanceof androidx.fragment.app.Fragment) {
+                ((androidx.fragment.app.Fragment) instance).setArguments(postcard.getExtras());
             }
             return instance;
         } catch (Exception ex) {

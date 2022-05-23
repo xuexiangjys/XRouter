@@ -17,7 +17,9 @@
 package com.xuexiang.xrouterdemo.java;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.xuexiang.xrouter.annotation.Router;
 
 @Router(path = "/module/2", group = "m2")

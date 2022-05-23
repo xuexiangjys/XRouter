@@ -23,12 +23,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.util.SparseArray;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.xuexiang.xrouter.facade.callback.NavigationCallback;
 import com.xuexiang.xrouter.facade.service.SerializationService;
@@ -263,7 +264,7 @@ public final class Postcard extends RouteInfo {
      * @param fragment    fragment
      * @param requestCode startActivityForResult's param
      */
-    public void navigation(@NonNull android.support.v4.app.Fragment fragment, int requestCode) {
+    public void navigation(@NonNull androidx.fragment.app.Fragment fragment, int requestCode) {
         navigation(fragment, requestCode, null);
     }
 
@@ -273,7 +274,7 @@ public final class Postcard extends RouteInfo {
      * @param fragment    fragment
      * @param requestCode startActivityForResult's param
      */
-    public void navigation(@NonNull android.support.v4.app.Fragment fragment, int requestCode, NavigationCallback callback) {
+    public void navigation(@NonNull androidx.fragment.app.Fragment fragment, int requestCode, NavigationCallback callback) {
         XRouter.getInstance().navigation(fragment, this, requestCode, callback);
     }
 

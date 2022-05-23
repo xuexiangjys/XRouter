@@ -16,7 +16,7 @@
 
 package com.xuexiang.xrouter.thread;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.xuexiang.xrouter.logs.XRLog;
 
@@ -58,7 +58,7 @@ public class DefaultThreadFactory implements ThreadFactory {
         // 捕获多线程处理中的异常
         thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
-            public void uncaughtException(Thread thread, Throwable ex) {
+            public void uncaughtException(@NonNull Thread thread, @NonNull Throwable ex) {
                 XRLog.e("Running task appeared exception! Thread [" + thread.getName() + "], because [" + ex.getMessage() + "]", ex);
             }
         });

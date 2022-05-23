@@ -20,7 +20,8 @@ import android.app.Application;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.xuexiang.xrouter.exception.InitException;
 import com.xuexiang.xrouter.facade.Postcard;
@@ -219,7 +220,7 @@ public final class XRouter {
      * @param requestCode Set for startActivityForResult
      * @param callback    路由导航回调
      */
-    public Object navigation(@NonNull android.support.v4.app.Fragment fragment, @NonNull Postcard postcard, int requestCode, NavigationCallback callback) {
+    public Object navigation(@NonNull androidx.fragment.app.Fragment fragment, @NonNull Postcard postcard, int requestCode, NavigationCallback callback) {
         return _XRouter.getInstance().navigation(fragment, postcard, requestCode, callback);
     }
 }

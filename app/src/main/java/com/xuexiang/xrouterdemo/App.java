@@ -17,16 +17,10 @@
 package com.xuexiang.xrouterdemo;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.xuexiang.xpage.AppPageConfig;
 import com.xuexiang.xpage.PageConfig;
-import com.xuexiang.xpage.PageConfiguration;
-import com.xuexiang.xpage.model.PageInfo;
 import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xutil.XUtil;
-
-import java.util.List;
 
 /**
  * @author xuexiang
@@ -46,12 +40,7 @@ public class App extends Application {
     }
 
     private void initXPage() {
-        PageConfig.getInstance().setPageConfiguration(new PageConfiguration() {
-            @Override
-            public List<PageInfo> registerPages(Context context) {
-                return AppPageConfig.getInstance().getPages();
-            }
-        }).debug("PageLog").enableWatcher(false).init(this);
+        PageConfig.getInstance().debug("PageLog").init(this);
     }
 
     private void initXRouter() {

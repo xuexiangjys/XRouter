@@ -49,7 +49,7 @@ public class Test1Interceptor implements IInterceptor {
     @Override
     public void process(final Postcard postcard, final InterceptorCallback callback) {
         if ("/test/activity4".equals(postcard.getPath())) {
-            final AlertDialog.Builder ab = new AlertDialog.Builder(XUtil.get().getActivityLifecycleHelper().getCurrentActivity());
+            final AlertDialog.Builder ab = new AlertDialog.Builder(XUtil.getActivityLifecycleHelper().getCurrentActivity());
             ab.setCancelable(false);
             ab.setTitle("温馨提醒");
             ab.setMessage("想要跳转到Test4Activity么？(触发了\"/inter/test1\"拦截器，拦截了本次跳转)");
