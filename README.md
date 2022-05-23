@@ -9,7 +9,9 @@
 
 ## 关于我
 
-[![github](https://img.shields.io/badge/GitHub-xuexiangjys-blue.svg)](https://github.com/xuexiangjys)   [![csdn](https://img.shields.io/badge/CSDN-xuexiangjys-green.svg)](http://blog.csdn.net/xuexiangjys)
+| 公众号   | 掘金     |  知乎    |  CSDN   |   简书   |   思否  |   哔哩哔哩  |   今日头条
+|---------|---------|--------- |---------|---------|---------|---------|---------|
+| [我的Android开源之旅](https://t.1yb.co/Irse)  |  [点我](https://juejin.im/user/598feef55188257d592e56ed/posts)    |   [点我](https://www.zhihu.com/people/xuexiangjys/posts)       |   [点我](https://xuexiangjys.blog.csdn.net/)  |   [点我](https://www.jianshu.com/u/6bf605575337)  |   [点我](https://segmentfault.com/u/xuexiangjys)  |   [点我](https://space.bilibili.com/483850585)  |   [点我](https://img.rruu.net/image/5ff34ff7b02dd)
 
 ## 特征
 
@@ -72,7 +74,7 @@ buildscript {
     ···
     dependencies {
         ···
-        classpath 'com.github.xuexiangjys.XRouter:xrouter-plugin:1.0.1'
+        classpath 'com.github.xuexiangjys.XRouter:xrouter-plugin:1.1.0'
     }
 }
 ```
@@ -84,8 +86,8 @@ apply plugin: 'com.xuexiang.xrouter' //引用xrouter-plugin插件实现自动注
 
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.1.0'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.1.0'
 }
 
 ```
@@ -139,8 +141,8 @@ defaultConfig {
 ```
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.1.0'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.1.0'
 }
 ```
 
@@ -167,8 +169,8 @@ kapt {
 ```
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
-    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.1.0'
+    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.1.0'
 }
 ```
 
@@ -599,7 +601,7 @@ https://github.com/alibaba/ARouter
 
 打开微信扫一扫，向我提问：
 
-![这里写图片描述](https://img-blog.csdn.net/20180511001512918?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZXhpYW5nanlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![](https://img-blog.csdn.net/20180511001512918?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1ZXhpYW5nanlz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 [demo-gif]: https://github.com/xuexiangjys/XRouter/blob/master/img/xrouter.gif
 [download-svg]: https://img.shields.io/badge/downloads-1.8M-blue.svg

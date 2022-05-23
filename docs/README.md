@@ -1,5 +1,8 @@
 # XRouter
-[![xrouter][xrouter-svg]][xrouter]  [![api][apisvg]][api]
+[![](https://jitpack.io/v/xuexiangjys/XRouter.svg)](https://jitpack.io/#xuexiangjys/XRouter)
+[![api](https://img.shields.io/badge/API-14+-brightgreen.svg)](https://android-arsenal.com/api?level=14)
+[![I](https://img.shields.io/github/issues/xuexiangjys/XRouter.svg)](https://github.com/xuexiangjys/XRouter/issues)
+[![Star](https://img.shields.io/github/stars/xuexiangjys/XRouter.svg)](https://github.com/xuexiangjys/XRouter)
 
 一个轻量级的Android路由框架，基于ARouter上进行改良，优化Fragment的使用，可结合XPage使用。
 
@@ -50,7 +53,7 @@ buildscript {
     ···
     dependencies {
         ···
-        classpath 'com.github.xuexiangjys.XRouter:xrouter-plugin:1.0.1'
+        classpath 'com.github.xuexiangjys.XRouter:xrouter-plugin:1.1.0'
     }
 }
 ```
@@ -62,8 +65,8 @@ apply plugin: 'com.xuexiang.xrouter' //引用xrouter-plugin插件实现自动注
 
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.1.0'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.1.0'
 }
 
 ```
@@ -117,8 +120,8 @@ defaultConfig {
 ```
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
-    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.1.0'
+    annotationProcessor 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.1.0'
 }
 ```
 
@@ -145,8 +148,8 @@ kapt {
 ```
 dependencies {
     ···
-    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.0.1'
-    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.0.1'
+    implementation 'com.github.xuexiangjys.XRouter:xrouter-runtime:1.1.0'
+    kapt 'com.github.xuexiangjys.XRouter:xrouter-compiler:1.1.0'
 }
 ```
 
@@ -170,8 +173,3 @@ https://github.com/alibaba/ARouter
 ## 联系方式
 
 [![](https://img.shields.io/badge/点击一键加入QQ交流群-602082750-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=9922861ef85c19f1575aecea0e8680f60d9386080a97ed310c971ae074998887)
-
-[xrouter-svg]: https://img.shields.io/badge/XRouter-v1.0.1-brightgreen.svg
-[xrouter]: https://github.com/xuexiangjys/XRouter
-[apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
-[api]: https://android-arsenal.com/api?level=14
